@@ -1,0 +1,15 @@
+[
+  {
+    "id": 1,
+    "question": "Pregunta de prueba: ¿Qué significa la sigla HTML?",
+    "options": [
+      "HyperText Markup Language",
+      "HighText Markup Language",
+      "HyperTabular Markup Language",
+      "HyperText Machine Language"
+    ],
+    "answer": 0,
+    "category": "HTML",
+    "explanation": "HTML responde a las siglas HyperText Markup Language, que es el lenguaje de marcado estándar para crear páginas web."
+  }
+]
