@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import ProgressBar from './ProgressBar';
 
-function GameScreen({ moduleId, levelId, onEnd }) {
+function GameScreen({ moduleId, levelId, questionData, questionIndex, totalQuestions, onNextQuestion }) {
   const [typedAnswer, setTypedAnswer] = useState('');
   const [showExplanation, setShowExplanation] = useState(false);
 
-  // Reiniciar estado al cambiar de nivel/módulo
+  // Reiniciar estado cada vez que la pregunta cambia
   useEffect(() => {
     setTypedAnswer('');
     setShowExplanation(false);
-  }, [moduleId, levelId]);
+  }, [questionData]);
 
   const moduleNames = {
     html: 'HTML5 Estructural',
@@ -18,81 +18,16 @@ function GameScreen({ moduleId, levelId, onEnd }) {
     react: 'React Framework'
   };
 
-  // Generar datos maquetas académicas según la combinación de módulo y sub-nivel
-  const getMockQuestion = () => {
-    if (moduleId === 'html') {
-      if (levelId === 1) {
-        return {
-          category: "HTML Básicos",
-          type: "choice",
-          question: "¿Cuál es la etiqueta principal que actúa como raíz de un documento HTML?",
-          options: ["<head>", "<body>", "<html>", "<doctype>"],
-          answerIdx: 2,
-          explanation: "La etiqueta <html> es el elemento raíz que contiene todos los demás elementos del documento, excepto la declaración <!DOCTYPE>."
-        };
-      } else if (levelId === 2) {
-        return {
-          category: "Semántica HTML5",
-          type: "choice",
-          question: "¿Qué elemento semántico representa contenido independiente, autónomo y distribuible (como un post de blog)?",
-          options: ["<section>", "<div>", "<aside>", "<article>"],
-          answerIdx: 3,
-          explanation: "La etiqueta <article> está diseñada para contener información autocontenida que podría extraerse y reutilizarse de forma independiente."
-        };
-      } else {
-        return {
-          category: "Multimedia y Formularios",
-          type: "fill",
-          question: "Completa el atributo faltante en el input para que quede correctamente asociado al label por accesibilidad:",
-          code: "<label for=\"usr-email\">Email:</label>\n<input type=\"email\" id=\"___\">",
-          answer: "usr-email",
-          explanation: "El atributo 'id' del elemento <input> debe coincidir exactamente con el atributo 'for' del <label> para vincularlos."
-        };
-      }
-    } else if (moduleId === 'css') {
-      if (levelId === 1) {
-        return {
-          category: "Fundamentos CSS",
-          type: "choice",
-          question: "¿Cuál de los siguientes selectores tiene mayor especificidad en la cascada de CSS?",
-          options: [".clase-ejemplo", "#id-ejemplo", "div", "div.clase-ejemplo"],
-          answerIdx: 1,
-          explanation: "Los selectores de ID (#id-ejemplo) tienen un peso de especificidad significativamente mayor que los de clase o etiqueta."
-        };
-      } else if (levelId === 2) {
-        return {
-          category: "Layouts Flex/Grid",
-          type: "choice",
-          question: "En Flexbox, ¿qué propiedad alinea los elementos hijos a lo largo del eje principal (horizontal por defecto)?",
-          options: ["align-items", "justify-content", "flex-direction", "align-content"],
-          answerIdx: 1,
-          explanation: "La propiedad 'justify-content' se utiliza para alinear los flex-items a lo largo del eje principal (main axis)."
-        };
-      } else {
-        return {
-          category: "Efectos y Keyframes",
-          type: "fill",
-          question: "Completa la regla CSS para definir una animación que cambie la opacidad:",
-          code: "@___ fade {\n  from { opacity: 0; }\n  to { opacity: 1; }\n}",
-          answer: "keyframes",
-          explanation: "La regla '@keyframes' se utiliza en CSS para definir los pasos e intervalos de una animación."
-        };
-      }
-    } else {
-      // Marcador genérico para módulos de JS y React en esta fase
-      return {
-        category: "Módulo en Construcción",
-        type: levelId === 3 ? "fill" : "choice",
-        question: `[Maqueta ${moduleNames[moduleId]} - Nivel ${levelId}] ¿Qué método se usa por defecto?`,
-        options: ["Método A", "Método B", "Método C", "Método D"],
-        code: "const element = document.___('selector');",
-        answer: "querySelector",
-        explanation: "Pregunta temporal. En la siguiente fase se cargarán las preguntas oficiales desde el archivo JSON."
-      };
-    }
-  };
+  if (!questionData) {
+    return (
+      <div className="glass-panel">
+        <p>No hay preguntas disponibles para esta sección.</p>
+      </div>
+    );
+  }
 
-  const mockQuestion = getMockQuestion();
+  const isChoiceQuestion = questionData.type === 'choice';
+  const isLastQuestion = questionIndex === totalQuestions - 1;
 
   return (
     <div className="glass-panel animated-fade" style={{ maxWidth: '600px', textAlign: 'left' }}>
@@ -116,15 +51,15 @@ function GameScreen({ moduleId, levelId, onEnd }) {
           fontSize: '0.75rem',
           textTransform: 'uppercase'
         }}>
-          {mockQuestion.category}
+          {questionData.category}
         </span>
-        <span>Nivel: <strong style={{ color: 'var(--color-accent)' }}>{levelId} / 3</strong></span>
+        <span>Pregunta: <strong style={{ color: 'var(--color-accent)' }}>{questionIndex + 1} de {totalQuestions}</strong></span>
       </div>
 
       {/* Barra de progreso */}
-      <ProgressBar value={levelId} max={3} />
+      <ProgressBar value={questionIndex + (showExplanation ? 1 : 0)} max={totalQuestions} />
 
-      {/* Temporizador */}
+      {/* Temporizador estático */}
       <div style={{ marginBottom: '1.5rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.4rem', fontSize: '0.8rem' }}>
           <span style={{ color: 'var(--color-text-muted)' }}>Tiempo disponible</span>
@@ -154,13 +89,13 @@ function GameScreen({ moduleId, levelId, onEnd }) {
         color: 'var(--color-text-main)',
         fontWeight: '600'
       }}>
-        {mockQuestion.question}
+        {questionData.question}
       </h2>
 
       {/* Pregunta condicional */}
-      {mockQuestion.type === 'choice' ? (
+      {isChoiceQuestion ? (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', marginBottom: '1.5rem' }}>
-          {mockQuestion.options.map((option, idx) => (
+          {questionData.options.map((option, idx) => (
             <button
               key={idx}
               className="option-btn"
@@ -178,7 +113,8 @@ function GameScreen({ moduleId, levelId, onEnd }) {
                 transition: 'all 0.2s ease',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '0.8rem'
+                gap: '0.8rem',
+                width: '100%'
               }}
             >
               <span style={{
@@ -213,7 +149,7 @@ function GameScreen({ moduleId, levelId, onEnd }) {
             lineHeight: '1.5',
             overflowX: 'auto'
           }}>
-            <code>{mockQuestion.code}</code>
+            <code>{questionData.code}</code>
           </pre>
 
           <div style={{ display: 'flex', gap: '0.8rem' }}>
@@ -248,8 +184,8 @@ function GameScreen({ moduleId, levelId, onEnd }) {
       {/* Explicación */}
       {showExplanation && (
         <div className="animated-fade" style={{
-          background: 'rgba(255,255,255,0.01)',
-          border: '1px solid rgba(255,255,255,0.04)',
+          background: 'rgba(255, 255, 255, 0.01)',
+          border: '1px solid rgba(255, 255, 255, 0.04)',
           borderRadius: '16px',
           padding: '1.2rem',
           marginTop: '1.5rem'
@@ -267,30 +203,21 @@ function GameScreen({ moduleId, levelId, onEnd }) {
           <p style={{
             fontSize: '0.85rem',
             color: 'var(--color-text-muted)',
-            marginBottom: '1rem',
+            marginBottom: '1.2rem',
             lineHeight: '1.5'
           }}>
-            {mockQuestion.explanation}
+            {questionData.explanation}
           </p>
+
+          <button 
+            className="btn btn-primary" 
+            onClick={onNextQuestion}
+            style={{ width: '100%', fontSize: '0.95rem' }}
+          >
+            {isLastQuestion ? 'Terminar Lección 🏁' : 'Siguiente Pregunta ➡️'}
+          </button>
         </div>
       )}
-
-      {/* Botón para finalizar */}
-      <button 
-        className="btn btn-primary" 
-        onClick={onEnd}
-        style={{
-          width: '100%',
-          fontSize: '0.95rem',
-          marginTop: '1.5rem',
-          background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.1) 100%)',
-          border: '1px solid rgba(255,255,255,0.05)',
-          color: 'var(--color-text-main)',
-          boxShadow: 'none'
-        }}
-      >
-        Simular Completar Lección 🏁
-      </button>
     </div>
   );
 }

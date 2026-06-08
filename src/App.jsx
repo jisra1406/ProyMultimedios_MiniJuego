@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import StartScreen from './components/StartScreen';
 import ModuleDashboard from './components/ModuleDashboard';
 import LevelSelector from './components/LevelSelector';
@@ -19,8 +19,37 @@ function App() {
     js: [1],
     react: [1]
   });
-  
+
+  const [questions, setQuestions] = useState([]);
+  const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
   const [score, setScore] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Carga asíncrona de preguntas desde questions.json al montar la app
+  useEffect(() => {
+    fetch('/data/questions.json')
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('No se pudo cargar el banco de preguntas.');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setQuestions(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('Error cargando preguntas:', err);
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
+
+  // Filtrar preguntas asociadas al módulo y sub-nivel activo
+  const activeQuestions = questions.filter(
+    (q) => q.module === currentModule && q.level === currentLevel
+  );
 
   // Iniciar el juego: ir al Dashboard de módulos
   const handleStartGame = () => {
@@ -33,10 +62,20 @@ function App() {
     setGameState('levels');
   };
 
-  // Seleccionar un nivel específico: inicia el juego
+  // Seleccionar un nivel específico: inicia el juego en la pregunta 0
   const handleSelectLevel = (levelId) => {
     setCurrentLevel(levelId);
+    setCurrentQuestionIdx(0);
     setGameState('playing');
+  };
+
+  // Avanzar a la siguiente pregunta del nivel o finalizar el nivel
+  const handleNextQuestion = () => {
+    if (currentQuestionIdx < activeQuestions.length - 1) {
+      setCurrentQuestionIdx((prev) => prev + 1);
+    } else {
+      handleEndGame();
+    }
   };
 
   // Simular la finalización de un nivel e incrementar desbloqueos
@@ -85,6 +124,26 @@ function App() {
     setGameState('start');
   };
 
+  // Renderizar estados de carga o error
+  if (loading) {
+    return (
+      <div className="glass-panel animated-fade">
+        <h2 style={{ color: 'var(--color-primary)', fontFamily: 'var(--font-title)' }}>Cargando lecciones...</h2>
+        <p>Preparando el plan de trivia interactiva del curso de Multimedios.</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="glass-panel animated-fade">
+        <h2 style={{ color: 'var(--color-error)', fontFamily: 'var(--font-title)' }}>⚠️ Error al cargar</h2>
+        <p>{error}</p>
+        <p style={{ fontSize: '0.85rem' }}>Asegúrate de que /public/data/questions.json tenga un formato JSON válido.</p>
+      </div>
+    );
+  }
+
   return (
     <div className="app-container">
       {gameState === 'start' && (
@@ -108,11 +167,14 @@ function App() {
         />
       )}
 
-      {gameState === 'playing' && (
+      {gameState === 'playing' && activeQuestions.length > 0 && (
         <GameScreen 
           moduleId={currentModule} 
           levelId={currentLevel}
-          onEnd={handleEndGame} 
+          questionData={activeQuestions[currentQuestionIdx]}
+          questionIndex={currentQuestionIdx}
+          totalQuestions={activeQuestions.length}
+          onNextQuestion={handleNextQuestion}
         />
       )}
 

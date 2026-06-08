@@ -1,15 +1,627 @@
 [
   {
     "id": 1,
-    "question": "Pregunta de prueba: ¿Qué significa la sigla HTML?",
+    "module": "html",
+    "level": 1,
+    "type": "choice",
+    "question": "¿Cuál es la declaración obligatoria al inicio de todo documento HTML5 para indicar el tipo de documento?",
+    "options": ["<html lang=\"es\">", "<!DOCTYPE html>", "<meta charset=\"UTF-8\">", "<head>"],
+    "answer": 1,
+    "explanation": "<!DOCTYPE html> es la instrucción preliminar obligatoria en HTML5 que le indica al navegador que el documento debe renderizarse en modo estándar."
+  },
+  {
+    "id": 2,
+    "module": "html",
+    "level": 1,
+    "type": "choice",
+    "question": "¿En qué etiqueta se deben colocar los metadatos de la página que no se ven en la interfaz?",
+    "options": ["<body>", "<section>", "<head>", "<html>"],
+    "answer": 2,
+    "explanation": "La etiqueta <head> contiene metadatos sobre el documento HTML que no son mostrados directamente al usuario en la página."
+  },
+  {
+    "id": 3,
+    "module": "html",
+    "level": 1,
+    "type": "choice",
+    "question": "¿Qué atributo se usa en la etiqueta <html> para especificar el idioma principal del documento por accesibilidad?",
+    "options": ["lang", "src", "href", "alt"],
+    "answer": 0,
+    "explanation": "El atributo 'lang' (por ejemplo, lang=\"es\") indica el idioma del contenido para los motores de búsqueda y lectores de pantalla."
+  },
+  {
+    "id": 4,
+    "module": "html",
+    "level": 1,
+    "type": "choice",
+    "question": "¿Cuál es la etiqueta correcta para definir el título principal de una sección o página web?",
+    "options": ["<h6>", "<h>", "<h1>", "<header>"],
+    "answer": 2,
+    "explanation": "La etiqueta <h1> representa el nivel de encabezado más alto e importante en el documento."
+  },
+  {
+    "id": 5,
+    "module": "html",
+    "level": 1,
+    "type": "choice",
+    "question": "¿Qué etiqueta de HTML5 representa un salto de línea simple en el texto?",
+    "options": ["<lb>", "<br>", "<p>", "<hr>"],
+    "answer": 1,
+    "explanation": "La etiqueta <br> inserta un salto de línea simple sin iniciar un nuevo párrafo."
+  },
+  {
+    "id": 6,
+    "module": "html",
+    "level": 2,
+    "type": "choice",
+    "question": "¿Qué etiqueta semántica representa una sección que contiene enlaces de navegación del sitio web?",
+    "options": ["<nav>", "<aside>", "<header>", "<section>"],
+    "answer": 0,
+    "explanation": "La etiqueta <nav> se utiliza específicamente para agrupar conjuntos de enlaces de navegación principal."
+  },
+  {
+    "id": 7,
+    "module": "html",
+    "level": 2,
+    "type": "choice",
+    "question": "¿Qué etiqueta semántica representa contenido autónomo e independiente que podría reutilizarse en otros contextos (como un post)?",
+    "options": ["<section>", "<article>", "<div>", "<main>"],
+    "answer": 1,
+    "explanation": "<article> define un bloque auto-contenido de información, ideal para artículos de blog, noticias o widgets."
+  },
+  {
+    "id": 8,
+    "module": "html",
+    "level": 2,
+    "type": "choice",
+    "question": "¿Qué elemento semántico representa contenido tangencial o secundario al contenido principal (como barras laterales)?",
+    "options": ["<main>", "<footer>", "<aside>", "<nav>"],
+    "answer": 2,
+    "explanation": "La etiqueta <aside> representa contenido secundario o marginal de la página, a menudo maquetado como barra lateral."
+  },
+  {
+    "id": 9,
+    "module": "html",
+    "level": 2,
+    "type": "choice",
+    "question": "¿Qué etiqueta semántica de HTML5 define el pie de página de un documento o sección?",
+    "options": ["<bottom>", "<footer>", "<foot>", "<section>"],
+    "answer": 1,
+    "explanation": "La etiqueta <footer> contiene metadatos sobre la sección, derechos de autor, enlaces de contacto o legales del sitio."
+  },
+  {
+    "id": 10,
+    "module": "html",
+    "level": 2,
+    "type": "choice",
+    "question": "¿Qué etiqueta se utiliza para envolver una ilustración, foto o diagrama junto a su título descriptivo?",
+    "options": ["<img>", "<figure>", "<picture>", "<section>"],
+    "answer": 1,
+    "explanation": "La etiqueta <figure> se usa para agrupar contenido ilustrativo independiente junto a un encabezado descriptivo opcional."
+  },
+  {
+    "id": 11,
+    "module": "html",
+    "level": 3,
+    "type": "fill",
+    "question": "Completa el atributo del label para que se asocie correctamente con la caja de entrada (input) por accesibilidad:",
+    "code": "<label ___=\"username\">Usuario:</label>\n<input type=\"text\" id=\"username\">",
+    "answer": "for",
+    "explanation": "El atributo 'for' de la etiqueta <label> debe coincidir con el 'id' del <input> correspondiente para asociarlos semánticamente."
+  },
+  {
+    "id": 12,
+    "module": "html",
+    "level": 3,
+    "type": "fill",
+    "question": "Completa la etiqueta correcta para insertar un archivo de audio que muestre los controles de reproducción nativos:",
+    "code": "<___ controls>\n  <source src=\"sound.mp3\" type=\"audio/mpeg\">\n</___>",
+    "answer": "audio",
+    "explanation": "La etiqueta <audio> con el atributo 'controls' inserta el reproductor nativo de sonido del navegador."
+  },
+  {
+    "id": 13,
+    "module": "html",
+    "level": 3,
+    "type": "fill",
+    "question": "Completa la etiqueta para incrustar un reproductor de video nativo en la página:",
+    "code": "<___ src=\"intro.mp4\" width=\"640\" height=\"360\" controls>\n  Tu navegador no soporta video.\n</___>",
+    "answer": "video",
+    "explanation": "La etiqueta <video> permite reproducir formatos de video directamente en la página web sin reproductores externos."
+  },
+  {
+    "id": 14,
+    "module": "html",
+    "level": 3,
+    "type": "fill",
+    "question": "Completa el tipo de entrada de formulario especializado para validar automáticamente que el texto sea una dirección de correo válida:",
+    "code": "<input type=\"___\" placeholder=\"correo@ejemplo.com\">",
+    "answer": "email",
+    "explanation": "El tipo 'email' en el input activa las validaciones sintácticas automáticas de correo del lado del navegador."
+  },
+  {
+    "id": 15,
+    "module": "html",
+    "level": 3,
+    "type": "fill",
+    "question": "Completa la etiqueta utilizada para dibujar gráficos bidimensionales dinámicos mediante scripts (JavaScript):",
+    "code": "<___ id=\"myCanvas\" width=\"200\" height=\"100\">\n  Tu navegador no soporta gráficos.\n</___>",
+    "answer": "canvas",
+    "explanation": "La etiqueta <canvas> define un lienzo donde se pueden realizar trazados interactivos usando la API de Canvas en JavaScript."
+  },
+  {
+    "id": 16,
+    "module": "css",
+    "level": 1,
+    "type": "choice",
+    "question": "¿Qué selector de CSS tiene el mayor peso de especificidad en la cascada?",
+    "options": [".clase-item", "#id-principal", "div.clase-item", "div"],
+    "answer": 1,
+    "explanation": "Los selectores de ID (#id-principal) tienen una especificidad superior en comparación con clases y etiquetas."
+  },
+  {
+    "id": 17,
+    "module": "css",
+    "level": 1,
+    "type": "choice",
+    "question": "En el Box Model de CSS, ¿cuál es el espacio transparente alrededor de un elemento por fuera de su borde?",
+    "options": ["padding", "margin", "content", "border"],
+    "answer": 1,
+    "explanation": "El margen ('margin') es la separación externa de un elemento respecto a los demás, situándose por fuera del borde."
+  },
+  {
+    "id": 18,
+    "module": "css",
+    "level": 1,
+    "type": "choice",
+    "question": "En el Box Model de CSS, ¿cómo se le conoce al espacio que separa el contenido del elemento de su borde?",
+    "options": ["margin", "border", "padding", "outline"],
+    "answer": 2,
+    "explanation": "El relleno ('padding') es el espacio interno comprendido entre el contenido del elemento y su borde."
+  },
+  {
+    "id": 19,
+    "module": "css",
+    "level": 1,
+    "type": "choice",
+    "question": "¿Qué propiedad de CSS se utiliza para definir fuentes de respaldo en caso de que la principal no se cargue?",
+    "options": ["font-family", "font-style", "font-weight", "src"],
+    "answer": 0,
+    "explanation": "La propiedad 'font-family' admite una lista separada por comas de fuentes preferidas y genéricas (serif, sans-serif)."
+  },
+  {
+    "id": 20,
+    "module": "css",
+    "level": 1,
+    "type": "choice",
+    "question": "¿Qué propiedad determina la opacidad o transparencia visual completa de un elemento?",
+    "options": ["visibility", "color", "opacity", "background-color"],
+    "answer": 2,
+    "explanation": "La propiedad 'opacity' toma valores de 0 (completamente invisible) a 1 (completamente opaco)."
+  },
+  {
+    "id": 21,
+    "module": "css",
+    "level": 2,
+    "type": "choice",
+    "question": "En Flexbox, ¿qué propiedad alinea los elementos flexibles hijos a lo largo de su eje principal?",
+    "options": ["align-items", "justify-content", "flex-wrap", "align-content"],
+    "answer": 1,
+    "explanation": "'justify-content' distribuye el espacio sobrante y alinea los elementos flexibles a lo largo del eje principal."
+  },
+  {
+    "id": 22,
+    "module": "css",
+    "level": 2,
+    "type": "choice",
+    "question": "En CSS Grid, ¿cuál es la forma correcta de definir un contenedor con 3 columnas de igual ancho?",
     "options": [
-      "HyperText Markup Language",
-      "HighText Markup Language",
-      "HyperTabular Markup Language",
-      "HyperText Machine Language"
+      "grid-template-columns: repeat(3, 1fr);",
+      "grid-template-columns: 33% 33% 33%;",
+      "grid-columns: 1fr 1fr 1fr;",
+      "display-columns: repeat(3, auto);"
     ],
     "answer": 0,
-    "category": "HTML",
-    "explanation": "HTML responde a las siglas HyperText Markup Language, que es el lenguaje de marcado estándar para crear páginas web."
+    "explanation": "La función repeat(3, 1fr) define tres columnas iguales, ocupando cada una una fracción del espacio disponible en el grid."
+  },
+  {
+    "id": 23,
+    "module": "css",
+    "level": 2,
+    "type": "choice",
+    "question": "En Flexbox, ¿cuál propiedad alinea los flex-items en el eje transversal (perpendicular al eje principal)?",
+    "options": ["justify-content", "align-items", "flex-direction", "align-self"],
+    "answer": 1,
+    "explanation": "La propiedad 'align-items' alinea los elementos flexibles a lo largo del eje transversal del flex-container."
+  },
+  {
+    "id": 24,
+    "module": "css",
+    "level": 2,
+    "type": "choice",
+    "question": "¿Qué propiedad de Flexbox cambia la orientación del eje principal de horizontal (fila) a vertical (columna)?",
+    "options": ["flex-wrap", "flex-direction", "justify-content", "align-items"],
+    "answer": 1,
+    "explanation": "La propiedad 'flex-direction' establece el eje principal sobre el cual se disponen los flex-items."
+  },
+  {
+    "id": 25,
+    "module": "css",
+    "level": 2,
+    "type": "choice",
+    "question": "¿Qué propiedad simplificada establece el espacio o separación entre filas y columnas en Flexbox y CSS Grid?",
+    "options": ["margin", "padding", "gap", "grid-gap"],
+    "answer": 2,
+    "explanation": "La propiedad 'gap' define de forma rápida el espaciado interno entre celdas o elementos de un contenedor Grid/Flex."
+  },
+  {
+    "id": 26,
+    "module": "css",
+    "level": 3,
+    "type": "fill",
+    "question": "Completa la regla CSS para declarar animaciones basadas en fotogramas clave con el nombre 'fade':",
+    "code": "@___ fade {\n  from { opacity: 0; }\n  to { opacity: 1; }\n}",
+    "answer": "keyframes",
+    "explanation": "La regla '@keyframes' se utiliza para establecer las etapas intermedias de una animación CSS."
+  },
+  {
+    "id": 27,
+    "module": "css",
+    "level": 3,
+    "type": "fill",
+    "question": "Completa la regla para aplicar estilos solo en pantallas con un ancho máximo de 768 píxeles:",
+    "code": "@___ (max-width: 768px) {\n  .sidebar { display: none; }\n}",
+    "answer": "media",
+    "explanation": "La regla '@media' permite aplicar estilos CSS condicionales basándose en características del dispositivo (Media Queries)."
+  },
+  {
+    "id": 28,
+    "module": "css",
+    "level": 3,
+    "type": "fill",
+    "question": "Completa la propiedad abreviada para realizar una transición suave del color del fondo en 0.3 segundos con una curva de velocidad 'ease':",
+    "code": ".btn {\n  ___: background-color 0.3s ease;\n}",
+    "answer": "transition",
+    "explanation": "La propiedad 'transition' permite definir el efecto de transición entre estados en elementos CSS."
+  },
+  {
+    "id": 29,
+    "module": "css",
+    "level": 3,
+    "type": "fill",
+    "question": "Completa la propiedad para rotar 45 grados un elemento en el espacio bidimensional:",
+    "code": ".box {\n  ___: rotate(45deg);\n}",
+    "answer": "transform",
+    "explanation": "La propiedad 'transform' modifica el espacio de coordenadas del elemento, permitiendo traslaciones, rotaciones y escalados."
+  },
+  {
+    "id": 30,
+    "module": "css",
+    "level": 3,
+    "type": "fill",
+    "question": "Completa el valor de display para ocultar visualmente un menú móvil eliminándolo del flujo del layout:",
+    "code": ".menu-mobile {\n  display: ___;\n}",
+    "answer": "none",
+    "explanation": "La regla 'display: none' oculta el elemento de la pantalla y no reserva espacio para él en la maquetación."
+  },
+  {
+    "id": 31,
+    "module": "js",
+    "level": 1,
+    "type": "choice",
+    "question": "¿Cuál es la diferencia clave entre declarar variables con 'const' y 'let'?",
+    "options": [
+      "'const' tiene alcance global y 'let' alcance de bloque.",
+      "Las variables 'const' no permiten reasignar su valor, mientras que 'let' sí.",
+      "'const' solo admite números y 'let' admite strings.",
+      "Ambas funcionan de forma idéntica."
+    ],
+    "answer": 1,
+    "explanation": "'const' define constantes cuyo identificador no puede ser reasignado, mientras que 'let' define variables con reasignación permitida."
+  },
+  {
+    "id": 32,
+    "module": "js",
+    "level": 1,
+    "type": "choice",
+    "question": "¿Qué método del DOM moderno permite seleccionar el primer elemento coincidente con un selector de CSS?",
+    "options": ["document.getElementById", "document.querySelector", "document.getElementsByTagName", "document.find"],
+    "answer": 1,
+    "explanation": "document.querySelector('selector') es el método moderno que retorna el primer elemento coincidente con un selector CSS."
+  },
+  {
+    "id": 33,
+    "module": "js",
+    "level": 1,
+    "type": "choice",
+    "question": "¿Qué sintaxis de JavaScript permite crear cadenas con interpolación dinámica usando comillas invertidas?",
+    "options": ["Single Quotes", "Double Quotes", "Template Literals", "String Buffers"],
+    "answer": 2,
+    "explanation": "Los Template Literals se definen con comillas invertidas (`...`) y permiten inyectar código dinámico usando la sintaxis ${variable}."
+  },
+  {
+    "id": 34,
+    "module": "js",
+    "level": 1,
+    "type": "choice",
+    "question": "¿Qué método de la propiedad classList permite agregar clases de estilos a un elemento en el DOM?",
+    "options": ["classList.insert()", "classList.add()", "classList.append()", "classList.toggle()"],
+    "answer": 1,
+    "explanation": "El método 'add()' de 'classList' agrega una o más clases especificadas al elemento."
+  },
+  {
+    "id": 35,
+    "module": "js",
+    "level": 1,
+    "type": "choice",
+    "question": "¿Cuál es la sintaxis abreviada y moderna de funciones en JavaScript de ES6?",
+    "options": ["Anonymous Functions", "Arrow Functions", "Callback Functions", "Expressive Functions"],
+    "answer": 1,
+    "explanation": "Las Arrow Functions (funciones flecha) proporcionan una sintaxis más limpia y heredan el contexto 'this' léxicamente."
+  },
+  {
+    "id": 36,
+    "module": "js",
+    "level": 2,
+    "type": "choice",
+    "question": "¿Qué propiedad del objeto evento se utiliza en un formulario para evitar que la página se recargue automáticamente al enviarse?",
+    "options": ["event.stopPropagation()", "event.preventDefault()", "event.stop()", "event.cancelBubble()"],
+    "answer": 1,
+    "explanation": "event.preventDefault() cancela el comportamiento por defecto de un evento (como el envío y recarga de un formulario)."
+  },
+  {
+    "id": 37,
+    "module": "js",
+    "level": 2,
+    "type": "choice",
+    "question": "¿Qué fenómeno de JavaScript ocurre cuando un evento se propaga desde el elemento hijo de menor jerarquía hasta sus contenedores padre?",
+    "options": ["Event Delegating", "Event Bubbling (Burbujeo)", "Event Capturing", "Event Hijacking"],
+    "answer": 1,
+    "explanation": "El burbujeo (Bubbling) es la propagación ascendente de un evento a través del árbol del DOM."
+  },
+  {
+    "id": 38,
+    "module": "js",
+    "level": 2,
+    "type": "choice",
+    "question": "¿Qué propiedad del objeto de evento apunta directamente al elemento del DOM que originó o disparó el evento?",
+    "options": ["event.currentTarget", "event.target", "event.source", "event.path"],
+    "answer": 1,
+    "explanation": "La propiedad 'target' apunta al elemento exacto donde se originó el evento."
+  },
+  {
+    "id": 39,
+    "module": "js",
+    "level": 2,
+    "type": "choice",
+    "question": "¿Qué método se utiliza en JavaScript para registrar un controlador de eventos específico en un nodo del DOM?",
+    "options": ["addEventListener", "attachEvent", "onclick", "listenTo"],
+    "answer": 0,
+    "explanation": "'addEventListener' asocia un callback a un tipo de evento en el elemento seleccionado."
+  },
+  {
+    "id": 40,
+    "module": "js",
+    "level": 2,
+    "type": "choice",
+    "question": "¿Cuál es la fase en la propagación de eventos que ocurre ANTES de que el evento llegue al elemento objetivo (target)?",
+    "options": ["Fase de Burbujeo", "Fase de Captura", "Fase de Destino", "Fase de Propagación"],
+    "answer": 1,
+    "explanation": "La fase de captura viaja desde el elemento raíz (document) hacia abajo hasta el elemento objetivo antes de que ocurra el burbujeo."
+  },
+  {
+    "id": 41,
+    "module": "js",
+    "level": 3,
+    "type": "fill",
+    "question": "Completa el código para importar la función 'sumar' desde un archivo de módulos ESM en el mismo directorio:",
+    "code": "import { sumar } ___ './calculadora.js';",
+    "answer": "from",
+    "explanation": "La palabra clave 'from' en la sintaxis de módulos ESM indica la ruta relativa o absoluta del módulo a importar."
+  },
+  {
+    "id": 42,
+    "module": "js",
+    "level": 3,
+    "type": "fill",
+    "question": "Completa el código para obtener datos de una API externa asíncronamente esperando la respuesta en una función async:",
+    "code": "async function getData() {\n  const response = ___ fetch('api/data');\n  const data = await response.json();\n}",
+    "answer": "await",
+    "explanation": "La palabra clave 'await' se coloca antes de una promesa para esperar a que se resuelva, pausando la ejecución de la función async."
+  },
+  {
+    "id": 43,
+    "module": "js",
+    "level": 3,
+    "type": "fill",
+    "question": "Completa el constructor para inicializar un nuevo objeto promesa diferido en JavaScript:",
+    "code": "const myPromise = new ___((resolve, reject) => {\n  resolve('Éxito');\n});",
+    "answer": "Promise",
+    "explanation": "El objeto 'Promise' representa el resultado final de una operación asíncrona."
+  },
+  {
+    "id": 44,
+    "module": "js",
+    "level": 3,
+    "type": "fill",
+    "question": "Completa el método de promesa utilizado para manejar el resultado exitoso una vez resuelta:",
+    "code": "fetch('api/data')\n  .___((res) => res.json())\n  .then((data) => console.log(data));",
+    "answer": "then",
+    "explanation": "El método '.then()' recibe callbacks para ejecutar cuando la promesa se resuelve de manera exitosa."
+  },
+  {
+    "id": 45,
+    "module": "js",
+    "level": 3,
+    "type": "fill",
+    "question": "Completa el modificador de función obligatorio para poder usar 'await' dentro de ella:",
+    "code": "___ function fetchUser() {\n  const user = await fetch('/user');\n}",
+    "answer": "async",
+    "explanation": "El modificador 'async' declara una función asíncrona, la cual siempre retorna una promesa y permite el uso de await en su cuerpo."
+  },
+  {
+    "id": 46,
+    "module": "react",
+    "level": 1,
+    "type": "choice",
+    "question": "¿Por qué no se debe usar el atributo 'class' al renderizar elementos HTML dentro de JSX de React?",
+    "options": [
+      "Porque React no admite estilos CSS externos.",
+      "Porque 'class' es una palabra reservada en JavaScript; se debe usar 'className'.",
+      "Porque 'class' hace que el componente cargue más lento.",
+      "React admite 'class' y 'className' indistintamente y da igual."
+    ],
+    "answer": 1,
+    "explanation": "Dado que JSX es una extensión de JavaScript, y 'class' es una palabra reservada del lenguaje, React utiliza 'className' para definir clases de CSS."
+  },
+  {
+    "id": 47,
+    "module": "react",
+    "level": 1,
+    "type": "choice",
+    "question": "¿Cómo se pasan datos o propiedades desde un componente padre hacia un componente hijo en React?",
+    "options": ["Usando variables globales", "A través de Props", "Con sessionStorage", "Mediante selectores de clase"],
+    "answer": 1,
+    "explanation": "Las 'props' son argumentos que se pasan de forma unidireccional de componentes padres a hijos en React."
+  },
+  {
+    "id": 48,
+    "module": "react",
+    "level": 1,
+    "type": "choice",
+    "question": "¿Cuál es una regla sintáctica obligatoria del retorno de código JSX en un componente de React?",
+    "options": [
+      "Debe retornar siempre un elemento <div>.",
+      "Debe tener exactamente una única etiqueta raíz (o un Fragment).",
+      "No admite comentarios de código.",
+      "El retorno debe estar en una sola línea."
+    ],
+    "answer": 1,
+    "explanation": "JSX requiere que todo componente retorne un solo elemento raíz (pudiendo ser un Fragment '<></>') para construir el árbol de manera coherente."
+  },
+  {
+    "id": 49,
+    "module": "react",
+    "level": 1,
+    "type": "choice",
+    "question": "¿Qué método nativo de arrays en JS se prefiere para renderizar colecciones de elementos o listas dinámicamente en React?",
+    "options": ["forEach()", "map()", "filter()", "push()"],
+    "answer": 1,
+    "explanation": "El método 'map()' transforma colecciones en arreglos de elementos de JSX de forma declarativa."
+  },
+  {
+    "id": 50,
+    "module": "react",
+    "level": 1,
+    "type": "choice",
+    "question": "¿Cómo deben nombrarse obligatoriamente las funciones que representan componentes en React?",
+    "options": [
+      "Con la primera letra en mayúscula (PascalCase).",
+      "En minúsculas por completo (lowercase).",
+      "Terminando con la palabra Component.",
+      "En formato camelCase."
+    ],
+    "answer": 0,
+    "explanation": "React distingue elementos HTML de componentes del usuario basándose en la mayúscula inicial (PascalCase). De lo contrario, los trata como etiquetas HTML estándar."
+  },
+  {
+    "id": 51,
+    "module": "react",
+    "level": 2,
+    "type": "choice",
+    "question": "Si tienes una variable de estado 'const [count, setCount] = useState(0);', ¿cuál es la forma correcta de incrementar en 1?",
+    "options": ["count = count + 1;", "setCount(count + 1);", "setCount(1);", "count++;"],
+    "answer": 1,
+    "explanation": "El estado en React es inmutable; se debe modificar exclusivamente mediante su función set correspondientemente (setCount)."
+  },
+  {
+    "id": 52,
+    "module": "react",
+    "level": 2,
+    "type": "choice",
+    "question": "¿Qué tipo de entradas se caracterizan porque su valor es manejado directamente por el estado del componente de React?",
+    "options": ["Uncontrolled Inputs", "Controlled Inputs", "DOM Inputs", "Stateless Inputs"],
+    "answer": 1,
+    "explanation": "Los inputs controlados enlazan su propiedad 'value' a un estado de React y reaccionan a cambios mediante un callback 'onChange'."
+  },
+  {
+    "id": 53,
+    "module": "react",
+    "level": 2,
+    "type": "choice",
+    "question": "¿Cuál es el valor por defecto que recibe la función de inicialización de un hook como 'useState'?",
+    "options": ["El estado anterior", "El estado inicial", "El setter", "null"],
+    "answer": 1,
+    "explanation": "El argumento que se le pasa a useState() (ej. useState(0)) representa el valor inicial del estado en el primer render."
+  },
+  {
+    "id": 54,
+    "module": "react",
+    "level": 2,
+    "type": "choice",
+    "question": "¿Qué operador lógico de cortocircuito se utiliza habitualmente en JSX para renderizar un elemento condicionalmente cuando la premisa es verdadera?",
+    "options": ["||", "&&", "?:", "=="],
+    "answer": 1,
+    "explanation": "El operador '&&' (evaluación AND) evalúa la condición de la izquierda y si es verdadera renderiza lo que está en la derecha."
+  },
+  {
+    "id": 55,
+    "module": "react",
+    "level": 2,
+    "type": "choice",
+    "question": "¿Cómo se denomina al patrón en React donde se traslada el estado local al ancestro común más cercano para compartirlo entre hijos?",
+    "options": ["State Drilling", "Lifting State Up (Subir el estado)", "State Bubbling", "Context Sharing"],
+    "answer": 1,
+    "explanation": "Lifting State Up (subir el estado) es el patrón recomendado en React para compartir información entre componentes hermanos moviéndola a su padre."
+  },
+  {
+    "id": 56,
+    "module": "react",
+    "level": 3,
+    "type": "fill",
+    "question": "Completa el hook para que ejecute el efecto secundario ÚNICAMENTE una vez al montarse el componente:",
+    "code": "useEffect(() => {\n  console.log('Montado');\n}, ___);",
+    "answer": "[]",
+    "explanation": "Un arreglo de dependencias vacío '[]' le indica a React que el efecto secundario se ejecute una sola vez cuando el componente se monta."
+  },
+  {
+    "id": 57,
+    "module": "react",
+    "level": 3,
+    "type": "fill",
+    "question": "Completa el retorno del efecto para evitar fugas de memoria limpiando un temporizador activo:",
+    "code": "useEffect(() => {\n  const id = setInterval(() => {}, 1000);\n  ___ () => clearInterval(id);\n}, []);",
+    "answer": "return",
+    "explanation": "La función retornada ('return') dentro de un useEffect es ejecutada por React cuando el componente se desmonta o antes de volver a ejecutar el efecto, sirviendo para limpiezas de recursos."
+  },
+  {
+    "id": 58,
+    "module": "react",
+    "level": 3,
+    "type": "fill",
+    "question": "Completa el array de dependencias para que el efecto se vuelva a ejecutar cuando cambie la variable 'userId':",
+    "code": "useEffect(() => {\n  fetchUser(userId);\n}, [___]);",
+    "answer": "userId",
+    "explanation": "Colocar variables dentro del array de dependencias le indica a React que debe re-ejecutar el hook cuando alguno de esos valores cambia."
+  },
+  {
+    "id": 59,
+    "module": "react",
+    "level": 3,
+    "type": "fill",
+    "question": "Completa el hook para ejecutar efectos secundarios en un componente (como peticiones HTTP, suscripciones o timers):",
+    "code": "___(() => {\n  document.title = 'Listo';\n}, []);",
+    "answer": "useEffect",
+    "explanation": "El hook 'useEffect' maneja efectos secundarios en componentes funcionales, reemplazando los ciclos de vida de clase."
+  },
+  {
+    "id": 60,
+    "module": "react",
+    "level": 3,
+    "type": "fill",
+    "question": "Completa la regla fundamental de los hooks: Los hooks solo se deben llamar en el nivel ___ de la función (no dentro de loops o condicionales):",
+    "code": "// Regla de Hooks:\n// Solo llamar en el nivel ___\nconst [value, setValue] = useState('');",
+    "answer": "superior",
+    "explanation": "La regla 'Only Call Hooks at the Top Level' garantiza que los hooks se ejecuten siempre en el mismo orden en cada renderizado."
   }
 ]
