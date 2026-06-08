@@ -1,41 +1,64 @@
 # Trivia Interactiva: Curso de Multimedios (UCR)
 
-Este es un minijuego educativo en formato de trivia enfocado en evaluar los contenidos teóricos y prácticos del curso **IF7102 - Multimedios** (I Ciclo 2026) de la **Universidad de Costa Rica (UCR)**.
+Este es un minijuego educativo en formato de trivia progresiva y evolutiva desarrollado para el curso **IF7102 - Multimedios** (I Ciclo 2026) en la **Universidad de Costa Rica (UCR)**. Su objetivo es evaluar y reforzar los conocimientos de desarrollo web en cuatro grandes áreas temáticas.
 
-## 🚀 Declaración del Framework Elegido (Semana 12)
-Para el desarrollo de esta aplicación multimedia de aprendizaje autónomo, se ha elegido el framework:
+## 🚀 Framework Elegido (Semana 12)
 * **React (v19+) con Vite**
-
-*Razón de la elección:* React nos permite modularizar la interfaz a través de componentes reutilizables (como pantallas, temporizadores, y barras de progreso) y ofrece una gestión eficiente del estado para manejar la interactividad y reactividad del minijuego de manera fluida.
 
 ---
 
-## 🛠️ Requisitos de Ejecución (Proyecto Base)
+## 🎮 Estructura y Reglas del Juego
 
-Asegúrate de tener instalado [Node.js](https://nodejs.org/).
+El juego ha sido diseñado con una arquitectura modular y progresiva para simular el plan de estudios del curso:
+
+### 1. Módulos Principales
+La trivia se organiza en 4 áreas temáticas ordenadas de forma secuencial:
+1. **HTML5 Estructural:** Semántica, etiquetas y estructuración del DOM.
+2. **CSS Avanzado & Layouts:** Flexbox, CSS Grid, selectores y animaciones.
+3. **JavaScript & DOM Moderno:** Manipulación del DOM, eventos, asincronía y ESM.
+4. **React Framework:** Componentes, hooks, estado reactivo y ciclo de vida.
+
+*Regla de Desbloqueo:* Para poder acceder al siguiente módulo principal, el usuario debe aprobar los tres sub-niveles del tema actual en orden.
+
+### 2. Sub-Niveles Académicos (3 por tema)
+Cada módulo principal cuenta con su propio selector de lecciones:
+* **Nivel 1: Conceptos Básicos** (Dificultad: Fácil)
+* **Nivel 2: Intermedio / Semántica** (Dificultad: Medio)
+* **Nivel 3: Avanzado / Integración** (Dificultad: Difícil)
+
+### 3. Tipos de Preguntas Soportadas
+La interfaz de juego se adapta dinámicamente según el nivel seleccionado:
+* **Opción Múltiple (`choice`):** Preguntas de selección simple con botones de opción múltiple (Niveles 1 y 2).
+* **Completar Código (`fill`):** Se muestra un bloque de código formateado con un espacio en blanco (`___`) y una caja de texto input para escribir la propiedad, etiqueta o método correcto (Nivel 3).
+
+---
+
+## 🛠️ Instrucciones de Ejecución
 
 1. **Instalar dependencias:**
    ```bash
    npm install
    ```
 
-2. **Iniciar servidor de desarrollo:**
+2. **Iniciar servidor local (Vite):**
    ```bash
    npm run dev
    ```
 
-3. **Ver la aplicación:**
-   Abre `http://localhost:5173` en tu navegador.
+3. **Ejecutar pruebas de producción:**
+   ```bash
+   npm run build
+   ```
 
 ---
 
-## 📂 Estructura del Proyecto (Planificada)
+## 📂 Arquitectura de Componentes de la Aplicación
 
-* `/public/data/questions.json`: Base de datos de preguntas sobre desarrollo web, HTML, CSS, JS, Asincronía, WebComponents y React.
-* `/src/components/`:
-  * `StartScreen.jsx`: Pantalla inicial del juego.
-  * `GameScreen.jsx`: Pantalla de preguntas y respuestas.
-  * `ResultScreen.jsx`: Pantalla de puntaje final.
-  * `ProgressBar.jsx`: Barra de progreso de la trivia.
+* `/src/App.jsx`: Componente principal que maneja los estados globales (módulo activo, nivel activo, puntuación, y desbloqueos de lecciones y módulos).
+* `/src/components/ModuleDashboard.jsx`: Dashboard principal de selección de temas (HTML, CSS, JS, React) con candados visuales de progreso.
+* `/src/components/LevelSelector.jsx`: Selector de sub-niveles de estudio con la descripción académica y dificultad de cada lección.
+* `/src/components/StartScreen.jsx`: Pantalla de bienvenida con las instrucciones y reglas generales de juego.
+* `/src/components/GameScreen.jsx`: Pantalla activa del juego que renderiza condicionalmente el panel de selección múltiple o el editor de completado de código.
+* `/src/components/ResultScreen.jsx`: Tarjeta con las estadísticas detalladas, aciertos, puntajes y retroalimentación personalizada.
+* `/src/components/ProgressBar.jsx`: Barra de progreso animada mediante transiciones CSS.
 * `/src/utils/audio.js`: Módulo de efectos de sonido.
-* `/src/App.jsx`: Componente principal (controlador de pantallas y estado).
