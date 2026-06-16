@@ -1,15 +1,67 @@
 import React, { useState, useEffect } from 'react';
 import ProgressBar from './ProgressBar';
 
-function GameScreen({ moduleId, levelId, questionData, questionIndex, totalQuestions, onNextQuestion }) {
+function GameScreen({ moduleId, levelId, questionData, questionIndex, totalQuestions, onNextQuestion, onAnswerSubmit, onCancelGame }) {
   const [typedAnswer, setTypedAnswer] = useState('');
   const [showExplanation, setShowExplanation] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(15);
+  const [hasAnswered, setHasAnswered] = useState(false);
+  const [isAnswerCorrect, setIsAnswerCorrect] = useState(null);
+  const [selectedIdx, setSelectedIdx] = useState(null);
 
   // Reiniciar estado cada vez que la pregunta cambia
   useEffect(() => {
     setTypedAnswer('');
     setShowExplanation(false);
+    setHasAnswered(false);
+    setIsAnswerCorrect(null);
+    setSelectedIdx(null);
+    setTimeLeft(questionData?.type === 'choice' ? 15 : 30);
   }, [questionData]);
+
+  // Temporizador dinámico
+  useEffect(() => {
+    if (!questionData || hasAnswered || timeLeft <= 0) return;
+
+    const timerId = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timerId);
+          handleTimeUp();
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timerId);
+  }, [questionData, hasAnswered, timeLeft]);
+
+  const handleTimeUp = () => {
+    setHasAnswered(true);
+    setIsAnswerCorrect(false);
+    setShowExplanation(true);
+    if (onAnswerSubmit) onAnswerSubmit(false, 0);
+  };
+
+  const handleOptionClick = (idx) => {
+    if (hasAnswered) return;
+    setSelectedIdx(idx);
+    const correct = idx === questionData.answer;
+    setHasAnswered(true);
+    setIsAnswerCorrect(correct);
+    setShowExplanation(true);
+    if (onAnswerSubmit) onAnswerSubmit(correct, timeLeft);
+  };
+
+  const handleFillSubmit = () => {
+    if (hasAnswered) return;
+    const correct = typedAnswer.trim().toLowerCase() === String(questionData.answer).toLowerCase();
+    setHasAnswered(true);
+    setIsAnswerCorrect(correct);
+    setShowExplanation(true);
+    if (onAnswerSubmit) onAnswerSubmit(correct, timeLeft);
+  };
 
   const moduleNames = {
     html: 'HTML5 Estructural',
@@ -53,17 +105,38 @@ function GameScreen({ moduleId, levelId, questionData, questionIndex, totalQuest
         }}>
           {questionData.category}
         </span>
-        <span>Pregunta: <strong style={{ color: 'var(--color-accent)' }}>{questionIndex + 1} de {totalQuestions}</strong></span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+          <span>Pregunta: <strong style={{ color: 'var(--color-accent)' }}>{questionIndex + 1} de {totalQuestions}</strong></span>
+          <button 
+            onClick={onCancelGame} 
+            title="Cancelar partida y salir"
+            style={{ 
+              background: 'rgba(239, 68, 68, 0.15)', 
+              color: 'var(--color-error)', 
+              border: 'none', 
+              borderRadius: '8px', 
+              padding: '0.3rem 0.6rem', 
+              cursor: 'pointer', 
+              fontSize: '0.75rem', 
+              fontWeight: 'bold',
+              transition: 'background 0.2s'
+            }}
+            onMouseEnter={(e) => e.target.style.background = 'rgba(239, 68, 68, 0.25)'}
+            onMouseLeave={(e) => e.target.style.background = 'rgba(239, 68, 68, 0.15)'}
+          >
+            ✖ Salir
+          </button>
+        </div>
       </div>
 
       {/* Barra de progreso */}
       <ProgressBar value={questionIndex + (showExplanation ? 1 : 0)} max={totalQuestions} />
 
-      {/* Temporizador estático */}
+      {/* Temporizador dinámico */}
       <div style={{ marginBottom: '1.5rem' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.4rem', fontSize: '0.8rem' }}>
           <span style={{ color: 'var(--color-text-muted)' }}>Tiempo disponible</span>
-          <span style={{ fontWeight: 'bold', color: 'var(--color-success)' }}>15 seg</span>
+          <span style={{ fontWeight: 'bold', color: timeLeft <= 5 ? 'var(--color-error)' : 'var(--color-success)' }}>{timeLeft} seg</span>
         </div>
         <div style={{
           width: '100%',
@@ -74,9 +147,10 @@ function GameScreen({ moduleId, levelId, questionData, questionIndex, totalQuest
           border: '1px solid rgba(255,255,255,0.05)'
         }}>
           <div style={{
-            width: '100%',
+            width: `${(timeLeft / (isChoiceQuestion ? 15 : 30)) * 100}%`,
             height: '100%',
-            backgroundColor: 'var(--color-success)'
+            backgroundColor: timeLeft <= 5 ? 'var(--color-error)' : 'var(--color-success)',
+            transition: 'width 1s linear, background-color 0.3s ease'
           }} />
         </div>
       </div>
@@ -99,15 +173,18 @@ function GameScreen({ moduleId, levelId, questionData, questionIndex, totalQuest
             <button
               key={idx}
               className="option-btn"
-              onClick={() => setShowExplanation(true)}
+              onClick={() => handleOptionClick(idx)}
+              disabled={hasAnswered}
               style={{
                 fontFamily: 'var(--font-body)',
                 fontSize: '0.95rem',
                 textAlign: 'left',
                 padding: '0.9rem 1.2rem',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
+                border: hasAnswered && idx === questionData.answer ? '1px solid var(--color-success)' : 
+                        hasAnswered && idx === selectedIdx && !isAnswerCorrect ? '1px solid var(--color-error)' : '1px solid rgba(255, 255, 255, 0.08)',
                 borderRadius: '12px',
-                background: 'rgba(255, 255, 255, 0.02)',
+                background: hasAnswered && idx === questionData.answer ? 'rgba(16, 185, 129, 0.1)' :
+                            hasAnswered && idx === selectedIdx && !isAnswerCorrect ? 'rgba(239, 68, 68, 0.1)' : 'rgba(255, 255, 255, 0.02)',
                 color: 'var(--color-text-main)',
                 cursor: 'pointer',
                 transition: 'all 0.2s ease',
@@ -172,7 +249,8 @@ function GameScreen({ moduleId, levelId, questionData, questionIndex, totalQuest
             />
             <button
               className="btn btn-primary"
-              onClick={() => setShowExplanation(true)}
+              onClick={handleFillSubmit}
+              disabled={hasAnswered}
               style={{ padding: '0 1.5rem', fontSize: '0.9rem' }}
             >
               Enviar
@@ -191,14 +269,14 @@ function GameScreen({ moduleId, levelId, questionData, questionIndex, totalQuest
           marginTop: '1.5rem'
         }}>
           <h3 style={{
-            fontSize: '0.9rem',
-            color: 'var(--color-success)',
+            fontSize: '0.95rem',
+            color: isAnswerCorrect ? 'var(--color-success)' : 'var(--color-error)',
             marginBottom: '0.4rem',
             display: 'flex',
             alignItems: 'center',
             gap: '0.4rem'
           }}>
-            ✨ Explicación de la lección:
+            {isAnswerCorrect ? '✨ ¡Correcto!' : '❌ Incorrecto / Tiempo agotado'}
           </h3>
           <p style={{
             fontSize: '0.85rem',

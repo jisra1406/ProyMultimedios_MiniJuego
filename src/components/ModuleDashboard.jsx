@@ -1,6 +1,7 @@
 import React from 'react';
 
-function ModuleDashboard({ unlockedModules = ['html'], onSelectModule, onBack }) {
+function ModuleDashboard({ unlockedModules = ['html'], completedLevels = { html: [], css: [], js: [], react: [] }, onSelectModule, onUnlockModule, onBack }) {
+  const moduleOrder = ['html', 'css', 'js', 'react'];
   const modules = [
     {
       id: 'html',
@@ -51,16 +52,19 @@ function ModuleDashboard({ unlockedModules = ['html'], onSelectModule, onBack })
       }}>
         {modules.map((mod) => {
           const isUnlocked = unlockedModules.includes(mod.id);
+          const modIdx = moduleOrder.indexOf(mod.id);
+          const prevModId = modIdx > 0 ? moduleOrder[modIdx - 1] : null;
+          const isUnlockable = !isUnlocked && prevModId && completedLevels[prevModId].includes(3);
 
           return (
             <div
               key={mod.id}
               style={{
-                background: isUnlocked ? 'rgba(255, 255, 255, 0.03)' : 'rgba(255, 255, 255, 0.01)',
-                border: `1px solid ${isUnlocked ? 'rgba(99, 102, 241, 0.2)' : 'rgba(255, 255, 255, 0.03)'}`,
+                background: isUnlocked ? 'rgba(255, 255, 255, 0.03)' : (isUnlockable ? 'rgba(16, 185, 129, 0.05)' : 'rgba(255, 255, 255, 0.01)'),
+                border: `1px solid ${isUnlocked ? 'rgba(99, 102, 241, 0.2)' : (isUnlockable ? 'rgba(16, 185, 129, 0.3)' : 'rgba(255, 255, 255, 0.03)')}`,
                 borderRadius: '16px',
                 padding: '1.2rem',
-                opacity: isUnlocked ? 1 : 0.55,
+                opacity: isUnlocked || isUnlockable ? 1 : 0.55,
                 position: 'relative',
                 display: 'flex',
                 flexDirection: 'column',
@@ -112,6 +116,20 @@ function ModuleDashboard({ unlockedModules = ['html'], onSelectModule, onBack })
                 >
                   Entrar al Módulo
                 </button>
+              ) : (isUnlockable ? (
+                <button
+                  className="btn btn-primary"
+                  onClick={() => onUnlockModule(mod.id)}
+                  style={{
+                    padding: '0.5rem 1rem',
+                    fontSize: '0.85rem',
+                    width: '100%',
+                    background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                    boxShadow: '0 4px 10px rgba(16, 185, 129, 0.2)'
+                  }}
+                >
+                  🔓 Desbloquear Módulo
+                </button>
               ) : (
                 <div style={{
                   padding: '0.5rem 1rem',
@@ -125,7 +143,7 @@ function ModuleDashboard({ unlockedModules = ['html'], onSelectModule, onBack })
                 }}>
                   🔒 Reclama Aprobación
                 </div>
-              )}
+              ))}
             </div>
           );
         })}

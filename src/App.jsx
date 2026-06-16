@@ -20,9 +20,17 @@ function App() {
     react: [1]
   });
 
+  // Niveles completados con >= 4 aciertos
+  const [completedLevels, setCompletedLevels] = useState({
+    html: [],
+    css: [],
+    js: [],
+    react: []
+  });
+
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIdx, setCurrentQuestionIdx] = useState(0);
-  const [score, setScore] = useState(0);
+  const [sessionStats, setSessionStats] = useState({ correct: 0, points: 0, total: 0 });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -66,6 +74,10 @@ function App() {
   const handleSelectLevel = (levelId) => {
     setCurrentLevel(levelId);
     setCurrentQuestionIdx(0);
+    const questionsForLevel = questions.filter(
+      (q) => q.module === currentModule && q.level === levelId
+    );
+    setSessionStats({ correct: 0, points: 0, total: questionsForLevel.length });
     setGameState('playing');
   };
 
@@ -74,39 +86,48 @@ function App() {
     if (currentQuestionIdx < activeQuestions.length - 1) {
       setCurrentQuestionIdx((prev) => prev + 1);
     } else {
+      if (sessionStats.correct >= 4) {
+        if (!completedLevels[currentModule].includes(currentLevel)) {
+          setCompletedLevels(prev => ({
+            ...prev,
+            [currentModule]: [...prev[currentModule], currentLevel]
+          }));
+        }
+      }
       handleEndGame();
     }
   };
 
-  // Simular la finalización de un nivel e incrementar desbloqueos
-  const handleEndGame = () => {
-    const activeModuleLevels = unlockedLevels[currentModule];
-    
-    if (currentLevel === 1 && !activeModuleLevels.includes(2)) {
-      // Desbloquear Nivel 2
-      setUnlockedLevels({
-        ...unlockedLevels,
-        [currentModule]: [...activeModuleLevels, 2]
-      });
-    } else if (currentLevel === 2 && !activeModuleLevels.includes(3)) {
-      // Desbloquear Nivel 3
-      setUnlockedLevels({
-        ...unlockedLevels,
-        [currentModule]: [...activeModuleLevels, 3]
-      });
-    } else if (currentLevel === 3) {
-      // Al completar el Nivel 3, desbloquear el siguiente módulo principal
-      if (currentModule === 'html' && !unlockedModules.includes('css')) {
-        setUnlockedModules([...unlockedModules, 'css']);
-      } else if (currentModule === 'css' && !unlockedModules.includes('js')) {
-        setUnlockedModules([...unlockedModules, 'js']);
-      } else if (currentModule === 'js' && !unlockedModules.includes('react')) {
-        setUnlockedModules([...unlockedModules, 'react']);
-      }
+  const handleAnswerSubmit = (isCorrect, timeLeft) => {
+    if (isCorrect) {
+      const basePoints = 100;
+      const timeBonus = timeLeft > 0 ? timeLeft * 5 : 0;
+      setSessionStats(prev => ({
+        ...prev,
+        correct: prev.correct + 1,
+        points: prev.points + basePoints + timeBonus
+      }));
     }
-    
-    setScore(currentLevel * 300 + 150); // Puntuación de ejemplo proporcional al nivel
+  };
+
+  // Finalizar el nivel y mostrar resultados
+  const handleEndGame = () => {
     setGameState('result');
+  };
+
+  const handleCancelGame = () => {
+    setGameState('levels');
+  };
+
+  const handleUnlockLevel = (moduleId, levelId) => {
+    setUnlockedLevels(prev => ({
+      ...prev,
+      [moduleId]: [...prev[moduleId], levelId]
+    }));
+  };
+
+  const handleUnlockModule = (moduleId) => {
+    setUnlockedModules(prev => [...prev, moduleId]);
   };
 
   // Regresar al selector de niveles desde la pantalla de resultados
@@ -153,7 +174,9 @@ function App() {
       {gameState === 'dashboard' && (
         <ModuleDashboard 
           unlockedModules={unlockedModules} 
+          completedLevels={completedLevels}
           onSelectModule={handleSelectModule}
+          onUnlockModule={handleUnlockModule}
           onBack={handleBackToWelcome}
         />
       )}
@@ -162,7 +185,9 @@ function App() {
         <LevelSelector
           moduleId={currentModule}
           unlockedLevels={unlockedLevels[currentModule]}
+          completedLevels={completedLevels[currentModule]}
           onSelectLevel={handleSelectLevel}
+          onUnlockLevel={(lvlId) => handleUnlockLevel(currentModule, lvlId)}
           onBack={handleBackToDashboard}
         />
       )}
@@ -175,13 +200,15 @@ function App() {
           questionIndex={currentQuestionIdx}
           totalQuestions={activeQuestions.length}
           onNextQuestion={handleNextQuestion}
+          onAnswerSubmit={handleAnswerSubmit}
+          onCancelGame={handleCancelGame}
         />
       )}
 
       {gameState === 'result' && (
         <ResultScreen 
-          score={score} 
-          onRestart={handleRestart} 
+          stats={sessionStats} 
+          onRestart={handleRestart}
         />
       )}
     </div>

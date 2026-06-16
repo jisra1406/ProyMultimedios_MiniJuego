@@ -1,6 +1,6 @@
 import React from 'react';
 
-function LevelSelector({ moduleId, unlockedLevels = [1], onSelectLevel, onBack }) {
+function LevelSelector({ moduleId, unlockedLevels = [1], completedLevels = [], onSelectLevel, onUnlockLevel, onBack }) {
   // Nombres de los módulos principales
   const moduleNames = {
     html: 'HTML5 Estructural',
@@ -55,18 +55,19 @@ function LevelSelector({ moduleId, unlockedLevels = [1], onSelectLevel, onBack }
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '2rem' }}>
         {currentLevels.map((lvl) => {
           const isUnlocked = unlockedLevels.includes(lvl.id);
+          const isUnlockable = !isUnlocked && (lvl.id === 1 || completedLevels.includes(lvl.id - 1));
 
           return (
             <div
               key={lvl.id}
               onClick={() => isUnlocked && onSelectLevel(lvl.id)}
               style={{
-                background: isUnlocked ? 'rgba(255, 255, 255, 0.03)' : 'rgba(255, 255, 255, 0.01)',
-                border: `1px solid ${isUnlocked ? 'rgba(255,255,255,0.08)' : 'rgba(255, 255, 255, 0.03)'}`,
+                background: isUnlocked ? 'rgba(255, 255, 255, 0.03)' : (isUnlockable ? 'rgba(16, 185, 129, 0.05)' : 'rgba(255, 255, 255, 0.01)'),
+                border: `1px solid ${isUnlocked ? 'rgba(255,255,255,0.08)' : (isUnlockable ? 'rgba(16, 185, 129, 0.3)' : 'rgba(255, 255, 255, 0.03)')}`,
                 borderRadius: '14px',
                 padding: '1.2rem',
-                cursor: isUnlocked ? 'pointer' : 'not-allowed',
-                opacity: isUnlocked ? 1 : 0.5,
+                cursor: isUnlocked ? 'pointer' : (isUnlockable ? 'default' : 'not-allowed'),
+                opacity: isUnlocked || isUnlockable ? 1 : 0.5,
                 transition: 'all 0.2s ease',
                 display: 'flex',
                 alignItems: 'center',
@@ -108,7 +109,23 @@ function LevelSelector({ moduleId, unlockedLevels = [1], onSelectLevel, onBack }
               </div>
 
               <div style={{ fontSize: '1.2rem', display: 'flex', alignItems: 'center' }}>
-                {isUnlocked ? '▶️' : '🔒'}
+                {isUnlocked ? '▶️' : (isUnlockable ? (
+                  <button 
+                    onClick={(e) => { e.stopPropagation(); onUnlockLevel(lvl.id); }}
+                    style={{
+                      background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                      color: 'white',
+                      border: 'none',
+                      padding: '0.4rem 0.8rem',
+                      borderRadius: '8px',
+                      fontSize: '0.85rem',
+                      cursor: 'pointer',
+                      boxShadow: '0 4px 10px rgba(16, 185, 129, 0.2)'
+                    }}
+                  >
+                    🔓 Desbloquear
+                  </button>
+                ) : '🔒')}
               </div>
             </div>
           );

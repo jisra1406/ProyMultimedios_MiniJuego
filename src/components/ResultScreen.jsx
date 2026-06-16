@@ -1,12 +1,11 @@
-function ResultScreen({ score, onRestart }) {
-  // Datos simulados para fines de diseño de interfaz
-  const mockStats = {
-    correctCount: 8,
-    totalCount: 10,
-    points: 920,
-    feedbackTitle: "¡Excelente Trabajo! ⚡",
-    feedbackDesc: "¡Tienes un gran dominio de los conceptos de desarrollo web vistos en el curso de Multimedios!"
-  };
+function ResultScreen({ stats, onRestart, onUnlockNext, isNextLocked }) {
+  const isPerfect = stats.correct === stats.total && stats.total > 0;
+  const isGood = stats.correct >= stats.total / 2;
+
+  const feedbackTitle = isPerfect ? "¡Perfección Absoluta! 🌟" : (isGood ? "¡Excelente Trabajo! ⚡" : "¡Sigue Practicando! 💪");
+  const feedbackDesc = isPerfect 
+    ? "Has respondido todo correctamente y con un gran manejo del tiempo." 
+    : (isGood ? "Tienes un buen dominio de los conceptos, pero aún puedes mejorar tu puntuación." : "Revisa el material de estudio e inténtalo de nuevo para mejorar tu resultado.");
 
   return (
     <div className="glass-panel animated-fade">
@@ -18,10 +17,10 @@ function ResultScreen({ score, onRestart }) {
       </div>
 
       <h1 style={{ fontSize: '2rem', marginBottom: '0.5rem', color: 'var(--color-primary)' }}>
-        {mockStats.feedbackTitle}
+        {feedbackTitle}
       </h1>
       <p style={{ fontSize: '0.95rem', marginBottom: '2rem', color: 'var(--color-text-muted)' }}>
-        {mockStats.feedbackDesc}
+        {feedbackDesc}
       </p>
 
       {/* Tarjeta de Estadísticas Maqueta */}
@@ -38,21 +37,50 @@ function ResultScreen({ score, onRestart }) {
         <div style={{ borderRight: '1px solid rgba(255, 255, 255, 0.05)', paddingRight: '0.5rem' }}>
           <span style={{ display: 'block', fontSize: '0.8rem', color: 'var(--color-text-muted)', marginBottom: '0.3rem' }}>Aciertos</span>
           <span style={{ fontSize: '1.8rem', fontWeight: 'bold', color: 'var(--color-text-main)' }}>
-            {mockStats.correctCount} <span style={{ fontSize: '1rem', fontWeight: 'normal', color: 'var(--color-text-muted)' }}>/ {mockStats.totalCount}</span>
+            {stats.correct} <span style={{ fontSize: '1rem', fontWeight: 'normal', color: 'var(--color-text-muted)' }}>/ {stats.total}</span>
           </span>
         </div>
         <div>
           <span style={{ display: 'block', fontSize: '0.8rem', color: 'var(--color-text-muted)', marginBottom: '0.3rem' }}>Puntaje Total</span>
           <span style={{ fontSize: '1.8rem', fontWeight: 'bold', color: 'var(--color-accent)' }}>
-            {mockStats.points}
+            {stats.points}
           </span>
         </div>
       </div>
 
-      {/* Botón de Reinicio */}
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <button className="btn btn-primary" onClick={onRestart} style={{ padding: '1rem 2.5rem', fontSize: '1.1rem', width: '100%', maxWidth: '300px' }}>
-          🔄 Jugar de Nuevo
+      {/* Acciones de Finalización */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
+        {isNextLocked && (
+          stats.correct >= 4 ? (
+            <button 
+              className="btn btn-primary" 
+              onClick={onUnlockNext} 
+              style={{ padding: '1rem 2.5rem', fontSize: '1.1rem', width: '100%', maxWidth: '300px', background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)' }}
+            >
+              🔓 Desbloquear Siguiente Nivel
+            </button>
+          ) : (
+            <div style={{ padding: '1rem', background: 'rgba(239, 68, 68, 0.1)', border: '1px solid var(--color-error)', borderRadius: '12px', width: '100%', maxWidth: '300px', textAlign: 'center' }}>
+              <p style={{ fontSize: '0.85rem', color: 'var(--color-text-main)', margin: 0 }}>
+                ⚠️ Necesitas al menos <strong>4 aciertos</strong> para desbloquear la siguiente lección.
+              </p>
+            </div>
+          )
+        )}
+        
+        <button 
+          className="btn" 
+          onClick={onRestart} 
+          style={{ 
+            padding: '1rem 2.5rem', 
+            fontSize: '1rem', 
+            width: '100%', 
+            maxWidth: '300px', 
+            background: isNextLocked && stats.correct >= 4 ? 'rgba(255, 255, 255, 0.05)' : 'var(--color-primary)',
+            color: 'var(--color-text-main)' 
+          }}
+        >
+          {isNextLocked && stats.correct >= 4 ? '🔙 Volver a Niveles' : '🔄 Jugar de Nuevo'}
         </button>
       </div>
     </div>
