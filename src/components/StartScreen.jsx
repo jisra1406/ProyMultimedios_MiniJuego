@@ -1,4 +1,16 @@
+import React, { useEffect } from 'react';
+import { playSound, stopBackgroundAudio } from '../utils/audio';
+
 function StartScreen({ onStart }) {
+  useEffect(() => {
+    playSound('pantallaInicial');
+  }, []);
+
+  const handleStart = () => {
+    playSound('click');
+    onStart();
+  };
+
   return (
     <div className="glass-panel animated-fade">
       {/* Icono Principal SVG: Representa un cerebro y tecnología */}
@@ -47,7 +59,7 @@ function StartScreen({ onStart }) {
       </div>
 
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <button className="btn btn-primary" onClick={onStart} style={{ padding: '1rem 2.5rem', fontSize: '1.1rem', width: '100%', maxWidth: '300px' }}>
+        <button className="btn btn-primary" onClick={handleStart} style={{ padding: '1rem 2.5rem', fontSize: '1.1rem', width: '100%', maxWidth: '300px' }}>
           ¡Comenzar Trivia!
         </button>
       </div>

@@ -138,3 +138,33 @@ p {
 .animated-fade {
   animation: fadeIn 0.4s ease forwards;
 }
+
+/* Responsividad para móviles */
+@media screen and (max-width: 600px) {
+  body {
+    padding: 1rem;
+  }
+  
+  #root {
+    padding: 1rem 0.5rem;
+  }
+  
+  .glass-panel {
+    padding: 1.5rem;
+    border-radius: 16px;
+  }
+  
+  h1 {
+    font-size: 1.5rem !important;
+  }
+  
+  .btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+  
+  .option-btn {
+    padding: 0.7rem 1rem !important;
+  }
+}
+

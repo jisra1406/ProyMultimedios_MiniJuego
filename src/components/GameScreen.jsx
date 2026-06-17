@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ProgressBar from './ProgressBar';
+import { playSound, stopBackgroundAudio } from '../utils/audio';
 
 function GameScreen({ moduleId, levelId, questionData, questionIndex, totalQuestions, onNextQuestion, onAnswerSubmit, onCancelGame }) {
   const [typedAnswer, setTypedAnswer] = useState('');
@@ -17,7 +18,12 @@ function GameScreen({ moduleId, levelId, questionData, questionIndex, totalQuest
     setIsAnswerCorrect(null);
     setSelectedIdx(null);
     setTimeLeft(questionData?.type === 'choice' ? 15 : 30);
-  }, [questionData]);
+    
+    // Play module sound only on the first question
+    if (questionIndex === 0 && questionData) {
+      playSound(`modulo${moduleId}`);
+    }
+  }, [questionData, questionIndex, moduleId]);
 
   // Temporizador dinámico
   useEffect(() => {
@@ -51,6 +57,7 @@ function GameScreen({ moduleId, levelId, questionData, questionIndex, totalQuest
     setHasAnswered(true);
     setIsAnswerCorrect(correct);
     setShowExplanation(true);
+    playSound(correct ? 'acierto' : 'respuestaIncorrecta');
     if (onAnswerSubmit) onAnswerSubmit(correct, timeLeft);
   };
 
@@ -60,6 +67,7 @@ function GameScreen({ moduleId, levelId, questionData, questionIndex, totalQuest
     setHasAnswered(true);
     setIsAnswerCorrect(correct);
     setShowExplanation(true);
+    playSound(correct ? 'acierto' : 'respuestaIncorrecta');
     if (onAnswerSubmit) onAnswerSubmit(correct, timeLeft);
   };
 
@@ -108,7 +116,7 @@ function GameScreen({ moduleId, levelId, questionData, questionIndex, totalQuest
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
           <span>Pregunta: <strong style={{ color: 'var(--color-accent)' }}>{questionIndex + 1} de {totalQuestions}</strong></span>
           <button 
-            onClick={onCancelGame} 
+            onClick={() => { playSound('click'); stopBackgroundAudio(); onCancelGame(); }} 
             title="Cancelar partida y salir"
             style={{ 
               background: 'rgba(239, 68, 68, 0.15)', 
@@ -289,7 +297,7 @@ function GameScreen({ moduleId, levelId, questionData, questionIndex, totalQuest
 
           <button 
             className="btn btn-primary" 
-            onClick={onNextQuestion}
+            onClick={() => { playSound('click'); onNextQuestion(); }}
             style={{ width: '100%', fontSize: '0.95rem' }}
           >
             {isLastQuestion ? 'Terminar Lección 🏁' : 'Siguiente Pregunta ➡️'}

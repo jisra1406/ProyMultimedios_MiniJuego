@@ -1,6 +1,17 @@
+import React, { useEffect } from 'react';
+import { playSound, stopBackgroundAudio } from '../utils/audio';
+
 function ResultScreen({ stats, onRestart, onUnlockNext, isNextLocked }) {
   const isPerfect = stats.correct === stats.total && stats.total > 0;
   const isGood = stats.correct >= stats.total / 2;
+
+  useEffect(() => {
+    if (stats.correct >= 4) {
+      playSound('resultadoGanador');
+    } else {
+      playSound('resultadoMalo');
+    }
+  }, [stats]);
 
   const feedbackTitle = isPerfect ? "¡Perfección Absoluta! 🌟" : (isGood ? "¡Excelente Trabajo! ⚡" : "¡Sigue Practicando! 💪");
   const feedbackDesc = isPerfect 
@@ -54,7 +65,7 @@ function ResultScreen({ stats, onRestart, onUnlockNext, isNextLocked }) {
           stats.correct >= 4 ? (
             <button 
               className="btn btn-primary" 
-              onClick={onUnlockNext} 
+              onClick={() => { playSound('desbloqueoNivel'); stopBackgroundAudio(); onUnlockNext(); }} 
               style={{ padding: '1rem 2.5rem', fontSize: '1.1rem', width: '100%', maxWidth: '300px', background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)', boxShadow: '0 4px 15px rgba(16, 185, 129, 0.3)' }}
             >
               🔓 Desbloquear Siguiente Nivel
@@ -70,7 +81,7 @@ function ResultScreen({ stats, onRestart, onUnlockNext, isNextLocked }) {
         
         <button 
           className="btn" 
-          onClick={onRestart} 
+          onClick={() => { playSound('click'); stopBackgroundAudio(); onRestart(); }} 
           style={{ 
             padding: '1rem 2.5rem', 
             fontSize: '1rem', 

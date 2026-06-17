@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { playSound } from '../utils/audio';
 
 function ModuleDashboard({ unlockedModules = ['html'], completedLevels = { html: [], css: [], js: [], react: [] }, onSelectModule, onUnlockModule, onBack }) {
   const moduleOrder = ['html', 'css', 'js', 'react'];
@@ -32,6 +33,10 @@ function ModuleDashboard({ unlockedModules = ['html'], completedLevels = { html:
       icon: '⚛️'
     }
   ];
+
+  useEffect(() => {
+    playSound('pantallaInicial');
+  }, []);
 
   return (
     <div className="glass-panel animated-fade" style={{ maxWidth: '650px' }}>
@@ -105,7 +110,7 @@ function ModuleDashboard({ unlockedModules = ['html'], completedLevels = { html:
               {isUnlocked ? (
                 <button
                   className="btn btn-primary"
-                  onClick={() => onSelectModule(mod.id)}
+                  onClick={() => { playSound('click'); onSelectModule(mod.id); }}
                   style={{
                     padding: '0.5rem 1rem',
                     fontSize: '0.85rem',
@@ -119,7 +124,7 @@ function ModuleDashboard({ unlockedModules = ['html'], completedLevels = { html:
               ) : (isUnlockable ? (
                 <button
                   className="btn btn-primary"
-                  onClick={() => onUnlockModule(mod.id)}
+                  onClick={() => { playSound('desbloqueoNivel'); onUnlockModule(mod.id); }}
                   style={{
                     padding: '0.5rem 1rem',
                     fontSize: '0.85rem',
@@ -151,7 +156,7 @@ function ModuleDashboard({ unlockedModules = ['html'], completedLevels = { html:
 
       {/* Botón de Regresar */}
       <button
-        onClick={onBack}
+        onClick={() => { playSound('click'); onBack(); }}
         style={{
           background: 'none',
           border: 'none',

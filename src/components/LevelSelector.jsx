@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { playSound } from '../utils/audio';
 
 function LevelSelector({ moduleId, unlockedLevels = [1], completedLevels = [], onSelectLevel, onUnlockLevel, onBack }) {
   // Nombres de los módulos principales
@@ -35,6 +36,10 @@ function LevelSelector({ moduleId, unlockedLevels = [1], completedLevels = [], o
 
   const currentLevels = levelsData[moduleId] || [];
 
+  useEffect(() => {
+    playSound('pantallaInicial');
+  }, []);
+
   return (
     <div className="glass-panel animated-fade" style={{ maxWidth: '580px', textAlign: 'left' }}>
       
@@ -60,7 +65,7 @@ function LevelSelector({ moduleId, unlockedLevels = [1], completedLevels = [], o
           return (
             <div
               key={lvl.id}
-              onClick={() => isUnlocked && onSelectLevel(lvl.id)}
+              onClick={() => { if (isUnlocked) { playSound('click'); onSelectLevel(lvl.id); } }}
               style={{
                 background: isUnlocked ? 'rgba(255, 255, 255, 0.03)' : (isUnlockable ? 'rgba(16, 185, 129, 0.05)' : 'rgba(255, 255, 255, 0.01)'),
                 border: `1px solid ${isUnlocked ? 'rgba(255,255,255,0.08)' : (isUnlockable ? 'rgba(16, 185, 129, 0.3)' : 'rgba(255, 255, 255, 0.03)')}`,
@@ -111,7 +116,7 @@ function LevelSelector({ moduleId, unlockedLevels = [1], completedLevels = [], o
               <div style={{ fontSize: '1.2rem', display: 'flex', alignItems: 'center' }}>
                 {isUnlocked ? '▶️' : (isUnlockable ? (
                   <button 
-                    onClick={(e) => { e.stopPropagation(); onUnlockLevel(lvl.id); }}
+                    onClick={(e) => { e.stopPropagation(); playSound('desbloqueoNivel'); onUnlockLevel(lvl.id); }}
                     style={{
                       background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
                       color: 'white',
@@ -134,7 +139,7 @@ function LevelSelector({ moduleId, unlockedLevels = [1], completedLevels = [], o
 
       {/* Botón de Regresar */}
       <button
-        onClick={onBack}
+        onClick={() => { playSound('click'); onBack(); }}
         style={{
           background: 'none',
           border: 'none',
