@@ -105,7 +105,7 @@ function GameScreen({ moduleId, levelId, questionData, questionIndex, totalQuest
       }} />
 
       <div className="glass-panel animated-fade" style={{ 
-        maxWidth: '600px', 
+        maxWidth: '850px', 
         textAlign: 'left',
         background: 'rgba(15, 23, 42, 0.85)', 
         backdropFilter: 'blur(12px)', 
