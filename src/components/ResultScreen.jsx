@@ -7,11 +7,11 @@ function ResultScreen({ moduleId, stats, onRestart, onUnlockNext, isNextLocked }
 
   let resultImage = '';
   if (isPerfect) {
-    resultImage = '/images/trofeoVictoria.png';
+    resultImage = 'images/trofeoVictoria.png';
   } else if (isGood) {
-    resultImage = '/images/silverMedalla.png';
+    resultImage = 'images/silverMedalla.png';
   } else {
-    resultImage = `/images/gameover-${moduleId === 'css' ? 'ccs' : moduleId}.png`;
+    resultImage = `images/gameover-${moduleId === 'css' ? 'ccs' : moduleId}.png`;
   }
 
   useEffect(() => {

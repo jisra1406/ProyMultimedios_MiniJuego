@@ -19,7 +19,7 @@ function StartScreen({ onStart }) {
         left: 0,
         width: '100vw',
         height: '100vh',
-        backgroundImage: `url(/images/fondo-dashboard.png)`,
+        backgroundImage: `url(images/fondo-dashboard.png)`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         zIndex: -1,

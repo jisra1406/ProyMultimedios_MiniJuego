@@ -11,7 +11,7 @@ function App() {
   const [currentModule, setCurrentModule] = useState(null); // 'html', 'css', 'js', 'react'
   const [currentLevel, setCurrentLevel] = useState(1); // 1, 2, 3
   const [unlockedModules, setUnlockedModules] = useState(['html']); // Módulos desbloqueados
-  
+
   // Niveles desbloqueados por módulo
   const [unlockedLevels, setUnlockedLevels] = useState({
     html: [1],
@@ -20,7 +20,7 @@ function App() {
     react: [1]
   });
 
-  // Niveles completados con >= 4 aciertos
+  // Niveles completadPos con >= 4 aciertos
   const [completedLevels, setCompletedLevels] = useState({
     html: [],
     css: [],
@@ -36,7 +36,7 @@ function App() {
 
   // Carga asíncrona de preguntas desde questions.json al montar la app
   useEffect(() => {
-    fetch('/data/questions.json')
+    fetch('data/questions.json')
       .then((response) => {
         if (!response.ok) {
           throw new Error('No se pudo cargar el banco de preguntas.');
@@ -172,8 +172,8 @@ function App() {
       )}
 
       {gameState === 'dashboard' && (
-        <ModuleDashboard 
-          unlockedModules={unlockedModules} 
+        <ModuleDashboard
+          unlockedModules={unlockedModules}
           completedLevels={completedLevels}
           onSelectModule={handleSelectModule}
           onUnlockModule={handleUnlockModule}
@@ -193,8 +193,8 @@ function App() {
       )}
 
       {gameState === 'playing' && activeQuestions.length > 0 && (
-        <GameScreen 
-          moduleId={currentModule} 
+        <GameScreen
+          moduleId={currentModule}
           levelId={currentLevel}
           questionData={activeQuestions[currentQuestionIdx]}
           questionIndex={currentQuestionIdx}
@@ -206,9 +206,9 @@ function App() {
       )}
 
       {gameState === 'result' && (
-        <ResultScreen 
+        <ResultScreen
           moduleId={currentModule}
-          stats={sessionStats} 
+          stats={sessionStats}
           onRestart={handleRestart}
         />
       )}

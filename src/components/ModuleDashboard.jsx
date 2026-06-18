@@ -9,28 +9,28 @@ function ModuleDashboard({ unlockedModules = ['html'], completedLevels = { html:
       name: 'HTML5 Estructural',
       desc: 'Semántica, etiquetas y estructuración del DOM.',
       color: '#e34f26',
-      icon: '/images/logo-html.png'
+      icon: 'images/logo-html.png'
     },
     {
       id: 'css',
       name: 'CSS Avanzado & Layouts',
       desc: 'Bases, Flexbox, Grid y animaciones modernas.',
       color: '#1572b6',
-      icon: '/images/logo-css3.png'
+      icon: 'images/logo-css3.png'
     },
     {
       id: 'js',
       name: 'JavaScript & DOM Moderno',
       desc: 'Eventos, asincronía, ESM y WebComponents.',
       color: '#f7df1e',
-      icon: '/images/logo-js.png'
+      icon: 'images/logo-js.png'
     },
     {
       id: 'react',
       name: 'React Framework',
       desc: 'Componentes, estado reactivo, hooks y ciclo de vida.',
       color: '#61dafb',
-      icon: '/images/logo-react.png'
+      icon: 'images/logo-react.png'
     }
   ];
 
@@ -46,7 +46,7 @@ function ModuleDashboard({ unlockedModules = ['html'], completedLevels = { html:
         left: 0,
         width: '100vw',
         height: '100vh',
-        backgroundImage: `url(/images/fondo-dashboard.png)`,
+        backgroundImage: `url(images/fondo-dashboard.png)`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         zIndex: -1,
