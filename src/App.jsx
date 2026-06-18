@@ -207,6 +207,7 @@ function App() {
 
       {gameState === 'result' && (
         <ResultScreen 
+          moduleId={currentModule}
           stats={sessionStats} 
           onRestart={handleRestart}
         />

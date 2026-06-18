@@ -1,9 +1,18 @@
 import React, { useEffect } from 'react';
 import { playSound, stopBackgroundAudio } from '../utils/audio';
 
-function ResultScreen({ stats, onRestart, onUnlockNext, isNextLocked }) {
+function ResultScreen({ moduleId, stats, onRestart, onUnlockNext, isNextLocked }) {
   const isPerfect = stats.correct === stats.total && stats.total > 0;
   const isGood = stats.correct >= stats.total / 2;
+
+  let resultImage = '';
+  if (isPerfect) {
+    resultImage = '/images/trofeoVictoria.png';
+  } else if (isGood) {
+    resultImage = '/images/silverMedalla.png';
+  } else {
+    resultImage = `/images/gameover-${moduleId === 'css' ? 'ccs' : moduleId}.png`;
+  }
 
   useEffect(() => {
     if (stats.correct >= 4) {
@@ -19,13 +28,40 @@ function ResultScreen({ stats, onRestart, onUnlockNext, isNextLocked }) {
     : (isGood ? "Tienes un buen dominio de los conceptos, pero aún puedes mejorar tu puntuación." : "Revisa el material de estudio e inténtalo de nuevo para mejorar tu resultado.");
 
   return (
-    <div className="glass-panel animated-fade">
-      {/* Icono de Trofeo */}
-      <div style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'center' }}>
-        <span style={{ fontSize: '4rem', filter: 'drop-shadow(0 4px 10px rgba(99, 102, 241, 0.4))' }}>
-          🏆
-        </span>
-      </div>
+    <>
+      {!isGood && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          backgroundImage: `url(${resultImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          zIndex: -1,
+          opacity: 0.6
+        }} />
+      )}
+
+      <div 
+        className="glass-panel animated-fade"
+        style={!isGood ? { background: 'rgba(15, 23, 42, 0.45)', backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)' } : {}}
+      >
+        {/* Imagen de Resultado */}
+        {isGood && (
+          <div style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'center' }}>
+            <img 
+              src={resultImage} 
+              alt="Resultado" 
+              style={{ 
+                height: '120px', 
+                objectFit: 'contain',
+                filter: 'drop-shadow(0 4px 10px rgba(99, 102, 241, 0.4))'
+              }} 
+            />
+          </div>
+        )}
 
       <h1 style={{ fontSize: '2rem', marginBottom: '0.5rem', color: 'var(--color-primary)' }}>
         {feedbackTitle}
@@ -94,7 +130,8 @@ function ResultScreen({ stats, onRestart, onUnlockNext, isNextLocked }) {
           {isNextLocked && stats.correct >= 4 ? '🔙 Volver a Niveles' : '🔄 Jugar de Nuevo'}
         </button>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 

@@ -9,28 +9,28 @@ function ModuleDashboard({ unlockedModules = ['html'], completedLevels = { html:
       name: 'HTML5 Estructural',
       desc: 'Semántica, etiquetas y estructuración del DOM.',
       color: '#e34f26',
-      icon: '🌐'
+      icon: '/images/logo-html.png'
     },
     {
       id: 'css',
       name: 'CSS Avanzado & Layouts',
       desc: 'Bases, Flexbox, Grid y animaciones modernas.',
       color: '#1572b6',
-      icon: '🎨'
+      icon: '/images/logo-css3.png'
     },
     {
       id: 'js',
       name: 'JavaScript & DOM Moderno',
       desc: 'Eventos, asincronía, ESM y WebComponents.',
       color: '#f7df1e',
-      icon: '⚡'
+      icon: '/images/logo-js.png'
     },
     {
       id: 'react',
       name: 'React Framework',
       desc: 'Componentes, estado reactivo, hooks y ciclo de vida.',
       color: '#61dafb',
-      icon: '⚛️'
+      icon: '/images/logo-react.png'
     }
   ];
 
@@ -81,7 +81,9 @@ function ModuleDashboard({ unlockedModules = ['html'], completedLevels = { html:
             >
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.8rem' }}>
-                  <span style={{ fontSize: '1.8rem' }}>{mod.icon}</span>
+                  <span style={{ fontSize: '1.8rem', display: 'flex', alignItems: 'center' }}>
+                    <img src={mod.icon} alt={`${mod.name} logo`} style={{ width: '40px', height: '40px', objectFit: 'contain' }} />
+                  </span>
                   {!isUnlocked && (
                     <span style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)' }}>🔒 Bloqueado</span>
                   )}
