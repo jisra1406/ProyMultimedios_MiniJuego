@@ -67,4 +67,24 @@ La interfaz de juego se adapta dinámicamente según el nivel seleccionado:
 
 ## 📸 Capturas de Pantalla
 
-*(Estudiante: Recuerda tomar 2 o 3 capturas de pantalla de tu aplicación corriendo en el navegador (ej. el menú principal, una pregunta, y la pantalla de resultados) y colocarlas aquí para cumplir con el punto 7 de la rúbrica).*
+A continuación, se presenta un recorrido visual de la experiencia inmersiva del juego interactivo:
+
+**1. Pantalla de Bienvenida**
+![Pantalla de Apertura](./public/screenshots/pantalla_apertura.png)
+*Vista inicial de la aplicación, donde se presentan las reglas del juego y el objetivo de la trivia web.*
+
+**2. Dashboard Principal de Módulos**
+![Menú Principal](./public/screenshots/menu_principal.png)
+*Menú principal con la selección de las cuatro áreas temáticas: HTML5, CSS3, JS Moderno y React.*
+
+**3. Selector de Sub-Niveles**
+![Selector de Niveles](./public/screenshots/modulo_html.png)
+*Vista de los sub-niveles disponibles al ingresar a un módulo específico (ej. HTML5), mostrando el plan de estudios y la dificultad.*
+
+**4. Interfaz de Juego (Pregunta Activa)**
+![Nivel 1 HTML](./public/screenshots/nivel1_html.png)
+*Pantalla de trivia interactiva con el temporizador corriendo, opciones múltiples y el diseño glassmorphism inmersivo.*
+
+**5. Resultados y Retroalimentación**
+![Resultado de Partida](./public/screenshots/resultado_partida.png)
+*Pantalla de estadísticas al finalizar un sub-nivel, donde se muestra el puntaje final, un trofeo de recompensa (si se aprueba) y el fondo adaptado.*
