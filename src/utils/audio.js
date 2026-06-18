@@ -1,17 +1,17 @@
 // Utilidad de audio
 
 const sounds = {
-  acierto: new Audio('audio/acierto.wav'),
-  click: new Audio('audio/click.wav'),
-  desbloqueoNivel: new Audio('audio/desbloqueoNivel.wav'),
+  acierto: new Audio('audio/acierto.mp3'),
+  click: new Audio('audio/click.mp3'),
+  desbloqueoNivel: new Audio('audio/desbloqueoNivel.mp3'),
   moduloccs: new Audio('audio/moduloccs.mp3'),
-  modulohtml: new Audio('audio/modulohtml.wav'),
+  modulohtml: new Audio('audio/modulohtml.mp3'),
   modulojs: new Audio('audio/modulojs.mp3'),
-  moduloreact: new Audio('audio/moduloreact.wav'),
-  respuestaIncorrecta: new Audio('audio/respuestaIncorrecta.wav'),
-  resultadoGanador: new Audio('audio/resultadoGanador.wav'),
-  resultadoMalo: new Audio('audio/resultadoMalo.wav'),
-  pantallaInicial: new Audio('audio/pantallaInicial.flac'),
+  moduloreact: new Audio('audio/moduloreact.mp3'),
+  respuestaIncorrecta: new Audio('audio/respuestaIncorrecta.mp3'),
+  resultadoGanador: new Audio('audio/resultadoGanador.mp3'),
+  resultadoMalo: new Audio('audio/resultadoMalo.mp3'),
+  pantallaInicial: new Audio('audio/pantallaInicial.mp3'),
 };
 
 const backgroundSounds = [

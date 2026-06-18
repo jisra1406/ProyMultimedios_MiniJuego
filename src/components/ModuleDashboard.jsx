@@ -80,24 +80,37 @@ function ModuleDashboard({ unlockedModules = ['html'], completedLevels = { html:
           const prevModId = modIdx > 0 ? moduleOrder[modIdx - 1] : null;
           const isUnlockable = !isUnlocked && prevModId && completedLevels[prevModId].includes(3);
 
+          const prevModName = prevModId
+            ? modules.find(m => m.id === prevModId)?.name
+            : null;
+
+          const tooltipMsg = !isUnlocked
+            ? (isUnlockable
+                ? `✅ ¡Prerequisito cumplido! Haz clic en "Desbloquear Módulo" para acceder a ${mod.name}.`
+                : `🔒 Para desbloquear este módulo debes completar los 3 niveles del módulo anterior: "${prevModName || 'el módulo previo'}".`)
+            : null;
+
           return (
-            <div
-              key={mod.id}
-              style={{
-                background: isUnlocked ? 'rgba(255, 255, 255, 0.03)' : (isUnlockable ? 'rgba(16, 185, 129, 0.05)' : 'rgba(255, 255, 255, 0.01)'),
-                border: `1px solid ${isUnlocked ? 'rgba(99, 102, 241, 0.2)' : (isUnlockable ? 'rgba(16, 185, 129, 0.3)' : 'rgba(255, 255, 255, 0.03)')}`,
-                borderRadius: '16px',
-                padding: '1.2rem',
-                opacity: isUnlocked || isUnlockable ? 1 : 0.55,
-                position: 'relative',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-between',
-                transition: 'all 0.3s ease',
-                cursor: isUnlocked ? 'default' : 'not-allowed',
-                boxShadow: isUnlocked ? '0 4px 12px rgba(99, 102, 241, 0.02)' : 'none'
-              }}
-            >
+            <div key={mod.id} className={!isUnlocked ? 'lock-tooltip-wrapper' : ''} style={{ position: !isUnlocked ? undefined : undefined }}>
+              {tooltipMsg && (
+                <div className="lock-tooltip">{tooltipMsg}</div>
+              )}
+              <div
+                style={{
+                  background: isUnlocked ? 'rgba(255, 255, 255, 0.03)' : (isUnlockable ? 'rgba(16, 185, 129, 0.05)' : 'rgba(255, 255, 255, 0.01)'),
+                  border: `1px solid ${isUnlocked ? 'rgba(99, 102, 241, 0.2)' : (isUnlockable ? 'rgba(16, 185, 129, 0.3)' : 'rgba(255, 255, 255, 0.03)')}`,
+                  borderRadius: '16px',
+                  padding: '1.2rem',
+                  opacity: isUnlocked || isUnlockable ? 1 : 0.55,
+                  position: 'relative',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'space-between',
+                  transition: 'all 0.3s ease',
+                  cursor: isUnlocked ? 'default' : 'not-allowed',
+                  boxShadow: isUnlocked ? '0 4px 12px rgba(99, 102, 241, 0.02)' : 'none'
+                }}
+              >
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.8rem' }}>
                   <span style={{ fontSize: '1.8rem', display: 'flex', alignItems: 'center' }}>
@@ -170,6 +183,7 @@ function ModuleDashboard({ unlockedModules = ['html'], completedLevels = { html:
                   🔒 Reclama Aprobación
                 </div>
               ))}
+              </div>
             </div>
           );
         })}

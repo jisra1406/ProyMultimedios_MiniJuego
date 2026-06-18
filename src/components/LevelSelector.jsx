@@ -82,75 +82,87 @@ function LevelSelector({ moduleId, unlockedLevels = [1], completedLevels = [], o
           const isUnlocked = unlockedLevels.includes(lvl.id);
           const isUnlockable = !isUnlocked && (lvl.id === 1 || completedLevels.includes(lvl.id - 1));
 
-          return (
-            <div
-              key={lvl.id}
-              onClick={() => { if (isUnlocked) { playSound('click'); onSelectLevel(lvl.id); } }}
-              style={{
-                background: isUnlocked ? 'rgba(255, 255, 255, 0.03)' : (isUnlockable ? 'rgba(16, 185, 129, 0.05)' : 'rgba(255, 255, 255, 0.01)'),
-                border: `1px solid ${isUnlocked ? 'rgba(255,255,255,0.08)' : (isUnlockable ? 'rgba(16, 185, 129, 0.3)' : 'rgba(255, 255, 255, 0.03)')}`,
-                borderRadius: '14px',
-                padding: '1.2rem',
-                cursor: isUnlocked ? 'pointer' : (isUnlockable ? 'default' : 'not-allowed'),
-                opacity: isUnlocked || isUnlockable ? 1 : 0.5,
-                transition: 'all 0.2s ease',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                gap: '1rem'
-              }}
-              onMouseEnter={(e) => {
-                if (isUnlocked) {
-                  e.currentTarget.style.borderColor = 'var(--color-primary)';
-                  e.currentTarget.style.transform = 'translateX(4px)';
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (isUnlocked) {
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
-                  e.currentTarget.style.transform = 'none';
-                }
-              }}
-            >
-              <div style={{ flex: 1 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.3rem' }}>
-                  <span style={{
-                    fontSize: '0.7rem',
-                    padding: '0.1rem 0.4rem',
-                    borderRadius: '6px',
-                    fontWeight: 'bold',
-                    background: lvl.difficulty === 'Fácil' ? 'rgba(16, 185, 129, 0.15)' : (lvl.difficulty === 'Medio' ? 'rgba(99, 102, 241, 0.15)' : 'rgba(239, 68, 68, 0.15)'),
-                    color: lvl.difficulty === 'Fácil' ? 'var(--color-success)' : (lvl.difficulty === 'Medio' ? 'var(--color-primary)' : 'var(--color-error)')
-                  }}>
-                    {lvl.difficulty}
-                  </span>
-                  <h3 style={{ fontSize: '0.95rem', margin: 0, color: 'var(--color-text-main)' }}>
-                    {lvl.name}
-                  </h3>
-                </div>
-                <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', margin: 0, lineHeight: '1.4' }}>
-                  {lvl.desc}
-                </p>
-              </div>
+          const prevLevelName = lvl.id > 1
+            ? currentLevels.find(l => l.id === lvl.id - 1)?.name
+            : null;
 
-              <div style={{ fontSize: '1.2rem', display: 'flex', alignItems: 'center' }}>
-                {isUnlocked ? '▶️' : (isUnlockable ? (
-                  <button 
-                    onClick={(e) => { e.stopPropagation(); playSound('desbloqueoNivel'); onUnlockLevel(lvl.id); }}
-                    style={{
-                      background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
-                      color: 'white',
-                      border: 'none',
-                      padding: '0.4rem 0.8rem',
-                      borderRadius: '8px',
-                      fontSize: '0.85rem',
-                      cursor: 'pointer',
-                      boxShadow: '0 4px 10px rgba(16, 185, 129, 0.2)'
-                    }}
-                  >
-                    🔓 Desbloquear
-                  </button>
-                ) : '🔒')}
+          const tooltipMsg = !isUnlocked
+            ? (isUnlockable
+                ? `✅ ¡Ya puedes desbloquearlo! Haz clic en "Desbloquear" para acceder a este nivel.`
+                : `🔒 Para desbloquear este nivel debes aprobar (≥ 4 aciertos) el nivel anterior: "${prevLevelName || 'el nivel previo'}".`)
+            : null;
+
+          return (
+            <div key={lvl.id} className={!isUnlocked ? 'lock-tooltip-wrapper' : ''}>
+              {tooltipMsg && <div className="lock-tooltip">{tooltipMsg}</div>}
+              <div
+                onClick={() => { if (isUnlocked) { playSound('click'); onSelectLevel(lvl.id); } }}
+                style={{
+                  background: isUnlocked ? 'rgba(255, 255, 255, 0.03)' : (isUnlockable ? 'rgba(16, 185, 129, 0.05)' : 'rgba(255, 255, 255, 0.01)'),
+                  border: `1px solid ${isUnlocked ? 'rgba(255,255,255,0.08)' : (isUnlockable ? 'rgba(16, 185, 129, 0.3)' : 'rgba(255, 255, 255, 0.03)')}`,
+                  borderRadius: '14px',
+                  padding: '1.2rem',
+                  cursor: isUnlocked ? 'pointer' : (isUnlockable ? 'default' : 'not-allowed'),
+                  opacity: isUnlocked || isUnlockable ? 1 : 0.5,
+                  transition: 'all 0.2s ease',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  gap: '1rem'
+                }}
+                onMouseEnter={(e) => {
+                  if (isUnlocked) {
+                    e.currentTarget.style.borderColor = 'var(--color-primary)';
+                    e.currentTarget.style.transform = 'translateX(4px)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (isUnlocked) {
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)';
+                    e.currentTarget.style.transform = 'none';
+                  }
+                }}
+              >
+                <div style={{ flex: 1 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.3rem' }}>
+                    <span style={{
+                      fontSize: '0.7rem',
+                      padding: '0.1rem 0.4rem',
+                      borderRadius: '6px',
+                      fontWeight: 'bold',
+                      background: lvl.difficulty === 'Fácil' ? 'rgba(16, 185, 129, 0.15)' : (lvl.difficulty === 'Medio' ? 'rgba(99, 102, 241, 0.15)' : 'rgba(239, 68, 68, 0.15)'),
+                      color: lvl.difficulty === 'Fácil' ? 'var(--color-success)' : (lvl.difficulty === 'Medio' ? 'var(--color-primary)' : 'var(--color-error)')
+                    }}>
+                      {lvl.difficulty}
+                    </span>
+                    <h3 style={{ fontSize: '0.95rem', margin: 0, color: 'var(--color-text-main)' }}>
+                      {lvl.name}
+                    </h3>
+                  </div>
+                  <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', margin: 0, lineHeight: '1.4' }}>
+                    {lvl.desc}
+                  </p>
+                </div>
+
+                <div style={{ fontSize: '1.2rem', display: 'flex', alignItems: 'center' }}>
+                  {isUnlocked ? '▶️' : (isUnlockable ? (
+                    <button
+                      onClick={(e) => { e.stopPropagation(); playSound('desbloqueoNivel'); onUnlockLevel(lvl.id); }}
+                      style={{
+                        background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                        color: 'white',
+                        border: 'none',
+                        padding: '0.4rem 0.8rem',
+                        borderRadius: '8px',
+                        fontSize: '0.85rem',
+                        cursor: 'pointer',
+                        boxShadow: '0 4px 10px rgba(16, 185, 129, 0.2)'
+                      }}
+                    >
+                      🔓 Desbloquear
+                    </button>
+                  ) : '🔒')}
+                </div>
               </div>
             </div>
           );
