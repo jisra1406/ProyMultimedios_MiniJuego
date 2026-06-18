@@ -97,7 +97,7 @@ function GameScreen({ moduleId, levelId, questionData, questionIndex, totalQuest
         left: 0,
         width: '100vw',
         height: '100vh',
-        backgroundImage: `url(/images/fondo-${moduleId === 'css' ? 'ccs' : moduleId}.jfif)`,
+        backgroundImage: `url(/images/fondo-${moduleId}.png)`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         zIndex: -1,
