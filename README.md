@@ -62,3 +62,9 @@ La interfaz de juego se adapta dinámicamente según el nivel seleccionado:
 * `/src/components/ResultScreen.jsx`: Tarjeta con las estadísticas detalladas, aciertos, puntajes y retroalimentación personalizada.
 * `/src/components/ProgressBar.jsx`: Barra de progreso animada mediante transiciones CSS.
 * `/src/utils/audio.js`: Módulo de efectos de sonido.
+
+---
+
+## 📸 Capturas de Pantalla
+
+*(Estudiante: Recuerda tomar 2 o 3 capturas de pantalla de tu aplicación corriendo en el navegador (ej. el menú principal, una pregunta, y la pantalla de resultados) y colocarlas aquí para cumplir con el punto 7 de la rúbrica).*
