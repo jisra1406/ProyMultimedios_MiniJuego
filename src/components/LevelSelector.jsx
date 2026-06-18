@@ -41,7 +41,27 @@ function LevelSelector({ moduleId, unlockedLevels = [1], completedLevels = [], o
   }, []);
 
   return (
-    <div className="glass-panel animated-fade" style={{ maxWidth: '580px', textAlign: 'left' }}>
+    <>
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        backgroundImage: `url(/images/fondo-${moduleId === 'css' ? 'ccs' : moduleId}.jfif)`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        zIndex: -1,
+        opacity: 0.5
+      }} />
+
+      <div className="glass-panel animated-fade" style={{ 
+        maxWidth: '580px', 
+        textAlign: 'left',
+        background: 'rgba(15, 23, 42, 0.5)', 
+        backdropFilter: 'blur(6px)', 
+        WebkitBackdropFilter: 'blur(6px)'
+      }}>
       
       {/* Cabecera */}
       <div style={{ marginBottom: '1.5rem' }}>
@@ -153,7 +173,8 @@ function LevelSelector({ moduleId, unlockedLevels = [1], completedLevels = [], o
       >
         ← Volver a los Módulos
       </button>
-    </div>
+      </div>
+    </>
   );
 }
 
