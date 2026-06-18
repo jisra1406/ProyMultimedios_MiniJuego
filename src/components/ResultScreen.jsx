@@ -46,7 +46,7 @@ function ResultScreen({ moduleId, stats, onRestart, onUnlockNext, isNextLocked }
 
       <div 
         className="glass-panel animated-fade"
-        style={!isGood ? { background: 'rgba(15, 23, 42, 0.45)', backdropFilter: 'blur(6px)', WebkitBackdropFilter: 'blur(6px)' } : {}}
+        style={!isGood ? { background: 'rgba(15, 23, 42, 0.85)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)' } : {}}
       >
         {/* Imagen de Resultado */}
         {isGood && (

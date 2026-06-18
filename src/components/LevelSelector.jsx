@@ -58,9 +58,9 @@ function LevelSelector({ moduleId, unlockedLevels = [1], completedLevels = [], o
       <div className="glass-panel animated-fade" style={{ 
         maxWidth: '580px', 
         textAlign: 'left',
-        background: 'rgba(15, 23, 42, 0.5)', 
-        backdropFilter: 'blur(6px)', 
-        WebkitBackdropFilter: 'blur(6px)'
+        background: 'rgba(15, 23, 42, 0.85)', 
+        backdropFilter: 'blur(12px)', 
+        WebkitBackdropFilter: 'blur(12px)'
       }}>
       
       {/* Cabecera */}
