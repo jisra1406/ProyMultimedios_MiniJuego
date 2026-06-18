@@ -39,7 +39,26 @@ function ModuleDashboard({ unlockedModules = ['html'], completedLevels = { html:
   }, []);
 
   return (
-    <div className="glass-panel animated-fade" style={{ maxWidth: '650px' }}>
+    <>
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        backgroundImage: `url(/images/fondo-dashboard.png)`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        zIndex: -1,
+        opacity: 0.5
+      }} />
+
+      <div className="glass-panel animated-fade" style={{ 
+        maxWidth: '650px',
+        background: 'rgba(15, 23, 42, 0.85)', 
+        backdropFilter: 'blur(12px)', 
+        WebkitBackdropFilter: 'blur(12px)'
+      }}>
       <h1 style={{ fontSize: '2rem', marginBottom: '0.5rem', background: 'linear-gradient(135deg, #f3f4f6 30%, #a5b4fc 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
         Módulos de Aprendizaje
       </h1>
@@ -172,7 +191,8 @@ function ModuleDashboard({ unlockedModules = ['html'], completedLevels = { html:
       >
         ← Volver a la Bienvenida
       </button>
-    </div>
+      </div>
+    </>
   );
 }
 
